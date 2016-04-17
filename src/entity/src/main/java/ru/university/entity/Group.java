@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class Group {
-    private long id;
+    private Long Id;
     private String name;
     private List<Student> students = new ArrayList<>();
 }

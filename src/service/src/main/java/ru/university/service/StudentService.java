@@ -12,10 +12,10 @@ public class StudentService {
 
     private Connection conn;
 
-    public StudentService(){
+    public StudentService() {
         try {
             //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/manage-student-point","postgres", "55164937");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/manage-student-point", "postgres", "55164937");
         } catch (SQLException e) {
             System.out.println("Соединиться с базой данных не удалось! ");
         }
@@ -53,13 +53,13 @@ public class StudentService {
         }
     }
 
-    public boolean add(Student student){
+    public boolean add(Student student) {
         try {
-            String formatInsertStudentSQL =  "INSERT INTO student (name, age, estimate)\n" +
+            String formatInsertStudentSQL = "INSERT INTO student (name, age, estimate)\n" +
                     "VALUES (' %1 ',  %2 , %3 );"
-                            .replace("%1",student.getFullName())
-                            .replace("%2",String.valueOf(student.getAge()))
-                            .replace("%3",String.valueOf(student.getEstimate()));
+                            .replace("%1", student.getFullName())
+                            .replace("%2", String.valueOf(student.getAge()))
+                            .replace("%3", String.valueOf(student.getEstimate()));
             Statement statement = conn.createStatement();
             statement.execute(formatInsertStudentSQL);
         } catch (SQLException e) {
@@ -71,25 +71,64 @@ public class StudentService {
     public boolean find(Student student) {
         {
             try {
-                String formatInsertStudentSQL =  "SELECT * FROM student where id=\n" +
-                        "(' %1 ');"
-                                .replace("%1",student.getFullName());
+                String formatInsertStudentSQL = "SELECT * FROM student WHERE NAME=" +
+                        "'%';".replace("%", student.getFullName());
                 Statement statement = conn.createStatement();
                 statement.execute(formatInsertStudentSQL);
+                // выбираем данные с БД
+                ResultSet result = statement.executeQuery(formatInsertStudentSQL);
+                // И если что то было получено то цикл while сработает
+                while (result.next()) {
+                    String userid = result.getString("id");
+                    String username = result.getString("name");
+                    String age = result.getString("age");
+                    String estimate = result.getString("estimate");
+                    System.out.println("Студент id: " + " " +  userid + " " +  " Имя студента " + username + ". Ему " + age + " лет." + " Балл студента: " + estimate);
+                }
             } catch (SQLException e) {
-                System.out.println("Не удалось создать какуюто фигню");
+                System.out.println(e.getMessage());
             }
-            return true;
+        }
+        return true;
+    }
+
+
+    public boolean delete(Student student) {
+        {
+            try {
+                String formatInsertStudentSQL = "DELETE FROM student WHERE NAME=" +
+                        "'%';".replace("%", student.getFullName());
+                Statement statement = conn.createStatement();
+                statement.execute(formatInsertStudentSQL);
+                // выбираем данные с БД
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
+    }
+
+    public void look() {
+        {
+            try {
+                String formatInsertStudentSQL = "SELECT * FROM student";
+                Statement statement = conn.createStatement();
+                statement.execute(formatInsertStudentSQL);
+                // выбираем данные с БД
+                ResultSet result = statement.executeQuery(formatInsertStudentSQL);
+                // И если что то было получено то цикл while сработает
+                while (result.next()) {
+                    String userid = result.getString("id");
+                    String username = result.getString("name");
+                    String age = result.getString("age");
+                    String estimate = result.getString("estimate");
+                    System.out.println("Студент id: " + " " +  userid + " " +  " Имя студента " + username + ". Ему " + age + " лет." + " Балл студента: " + estimate);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
-
-    public boolean delete(Student student){
-        return ALL_STUDENTS.remove(student);
-    }
-
-    public List<Student> look(){
-        return ALL_STUDENTS;
-    }
-
 }
+
 

@@ -56,20 +56,20 @@ public class StudentService {
     public boolean add(Student student) {
         try {
             String formatInsertStudentSQL = "INSERT INTO student (name, age, estimate)\n" +
-                    "VALUES (' %1 ',  %2 , %3 );"
+                    "VALUES ('%1',  %2 , %3 );"
                             .replace("%1", student.getFullName())
                             .replace("%2", String.valueOf(student.getAge()))
                             .replace("%3", String.valueOf(student.getEstimate()));
             Statement statement = conn.createStatement();
             statement.execute(formatInsertStudentSQL);
+            return true;
         } catch (SQLException e) {
-            System.out.println("Не удалось создать какуюто фигню");
+            return false;
         }
-        return true;
+
     }
 
-    public boolean find(Student student) {
-        {
+    public Student find(Student student) {
             try {
                 String formatInsertStudentSQL = "SELECT * FROM student WHERE NAME=" +
                         "'%';".replace("%", student.getFullName());
@@ -78,18 +78,14 @@ public class StudentService {
                 // выбираем данные с БД
                 ResultSet result = statement.executeQuery(formatInsertStudentSQL);
                 // И если что то было получено то цикл while сработает
-                while (result.next()) {
-                    String userid = result.getString("id");
-                    String username = result.getString("name");
-                    String age = result.getString("age");
-                    String estimate = result.getString("estimate");
-                    System.out.println("Студент id: " + " " +  userid + " " +  " Имя студента " + username + ". Ему " + age + " лет." + " Балл студента: " + estimate);
+                if  (result.next()){
+                    return getStudentFromResultSet(result);
+                } else {
+                    return null;
                 }
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                return null;
             }
-        }
-        return true;
     }
 
 
@@ -101,15 +97,16 @@ public class StudentService {
                 Statement statement = conn.createStatement();
                 statement.execute(formatInsertStudentSQL);
                 // выбираем данные с БД
+                return true;
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
+                return false;
             }
         }
-        return true;
     }
 
-    public void look() {
-        {
+    public List<Student> getAll() {
+            List<Student> students = new ArrayList<>();
             try {
                 String formatInsertStudentSQL = "SELECT * FROM student";
                 Statement statement = conn.createStatement();
@@ -118,16 +115,38 @@ public class StudentService {
                 ResultSet result = statement.executeQuery(formatInsertStudentSQL);
                 // И если что то было получено то цикл while сработает
                 while (result.next()) {
-                    String userid = result.getString("id");
-                    String username = result.getString("name");
-                    String age = result.getString("age");
-                    String estimate = result.getString("estimate");
-                    System.out.println("Студент id: " + " " +  userid + " " +  " Имя студента " + username + ". Ему " + age + " лет." + " Балл студента: " + estimate);
+                    students.add(getStudentFromResultSet(result));
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-        }
+        return students;
+    }
+
+    public boolean addEstimate(Student student) {
+
+            try {
+                String formatInsertStudentSQL = "UPDATE student SET age = age +%1 WHERE name = '%2';"
+                                .replace("%2", student.getFullName())
+                                .replace("%1", String.valueOf(student.getEstimate()));
+                Statement statement = conn.createStatement();
+                statement.execute(formatInsertStudentSQL);
+                // выбираем данные с БД
+                statement.executeQuery(formatInsertStudentSQL);
+                return true;
+            } catch (SQLException e) {
+                return false;
+            }
+    }
+
+    public Student getStudentFromResultSet (ResultSet result) throws SQLException {
+        Long userid = Long.valueOf(result.getString("id"));
+        String username = result.getString("name");
+        Integer age = Integer.valueOf(result.getString("age"));
+        Integer estimate = Integer.valueOf(result.getString("estimate"));
+        Student student = new Student(username, age, estimate);
+        student.setId(userid);
+        return student;
     }
 }
 

@@ -11,7 +11,6 @@ public class Student extends Human{
         super.fullName = fullName;
         this.estimate = studentEstimate;
     }
-
     public String toString() {
         return "Количество баллов студента " + estimate + "\n" + super.toString();
     }

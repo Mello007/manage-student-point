@@ -1,5 +1,4 @@
 package ru.university.service.security;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,7 +41,7 @@ public class MyUserDetailService implements UserDetailsService {
 
     private User buildUserForAuthentication(Teacher teacher,
                                             List<GrantedAuthority> authorities) {
-        return new User(teacher.getLogin(), teacher.getPassword(),
+        return new CustomUser(teacher.getTeacherId(), teacher.getLogin(), teacher.getPassword(),
                true, true, true, true, authorities);
     }
 
@@ -57,5 +56,4 @@ public class MyUserDetailService implements UserDetailsService {
         List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
         return Result;
     }
-
 }

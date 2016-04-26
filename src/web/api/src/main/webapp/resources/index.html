@@ -5,9 +5,16 @@
     <title>Пример веб-страницы</title>
 </head>
 <body>
-<h1>Заголовок</h1>
-<!-- Комментарий -->
-<p>Первый абзац.</p>
-<p>Второй абзац.</p>
+<center><h1>Список студентов</h1></center>
+
+
+<script type="text/javascript">
+    var x = new XMLHttpRequest();
+    x.open("GET", "/group/all", true);
+    x.onload = function (){
+        alert( x["name"]);
+    }
+    x.send(null);
+</script>
 </body>
 </html>

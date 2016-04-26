@@ -28,4 +28,5 @@ public class TeacherService {
         Teacher teacher = (Teacher)query.uniqueResult();
         return teacher;
     }
+
 }

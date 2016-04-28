@@ -46,4 +46,15 @@ public class GroupService {
         }
         return groupList;
     }
+
+    @Transactional
+    public List<Group> getGroupFromCurrentTeacher(){
+        long teacherId = session.getLoggedUserId();
+        Teacher teacher = sessionFactory.openSession().get(Teacher.class, teacherId);
+        List<Group> groupList = teacher.getGroups();
+        for (Group group : groupList){
+            group.getStudents();
+        }
+        return  groupList;
+    }
 }

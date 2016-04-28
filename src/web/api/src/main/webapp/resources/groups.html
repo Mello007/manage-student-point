@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <link href="main.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Пример веб-страницы</title>
+</head>
+<body>
+<center><h1 class="ribbon"><strong class="ribbon-content">Список студентов</strong></h1></center>
+
+<form action="/teacher/add"  method="POST">
+    <input name="fullName" value="Введите имя" type="text">
+    <input name="login" value="Введите логин" type="text">
+    <input name="password" value="Введите пароль" type="text">
+    <input type="submit" value="Отправить"/>
+</form>
+
+<center><div id="groups">
+
+</div></center>
+
+<script type="text/javascript">
+    var x = new XMLHttpRequest();
+    x.open("GET", "/group/groups", true);
+    x.onload = function (){
+        var parsedGroups = JSON.parse(this.responseText);
+         parsedGroups.forEach(function (group) {
+            var currentGroupDiv = document.getElementById('groups');
+            var parsedStudents = group.students;
+            var studentsTable = document.createElement('table');
+            studentsTable.innerHTML = '<h1>' + group.name + '</h1>';
+            studentsTable.innerHTML += '<tr> <th>Имя и Фамилия студента</th> <th>Количество баллов</th> </tr>'
+            parsedStudents.forEach(function(item)  {
+                var fullNameElement = document.createElement('td');
+                fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
+                var estimateElement = document.createElement('td');
+                estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';
+                var elementContainer = document.createElement('tr');
+                elementContainer.appendChild(fullNameElement);
+                elementContainer.appendChild(estimateElement);
+                studentsTable.appendChild(elementContainer);
+            });
+            currentGroupDiv.appendChild(studentsTable);
+        })
+    }
+    x.send(null);
+</script>
+</body>
+</html>

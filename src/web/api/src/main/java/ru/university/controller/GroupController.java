@@ -28,4 +28,9 @@ public class GroupController {
     public List<Group> all(){
         return groupService.findByTeacher();
     }
+
+    @RequestMapping(value = "groups", method = RequestMethod.GET)
+    public List<Group> findGroupsByCurrentTeacher(){
+        return  groupService.getGroupFromCurrentTeacher();
+    }
 }

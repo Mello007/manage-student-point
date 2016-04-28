@@ -6,14 +6,22 @@
     <title>Пример веб-страницы</title>
 </head>
 <body>
-<center><h1>Список студентов</h1></center>
+<center><h1 class="ribbon"><strong class="ribbon-content">Список студентов</strong></h1></center>
+
+<form action="/teacher/add"  method="POST">
+    <input name="fullName" value="Введите имя" type="text">
+    <input name="login" value="Введите логин" type="text">
+    <input name="password" value="Введите пароль" type="text">
+    <input type="submit" value="Отправить"/>
+</form>
+
 
 <center><table id="all-student-table" class="features-table">
     <tr>
         <th>Имя и Фамилия студента</th>
         <th>Количество баллов</th>
-        <!--<th>Количество пропусков по уважительной причине</th>-->
-        <!--<th>Количество пропусков по неуважительной причине</th>-->
+        <th>Количество пропусков по уважительной причине</th>
+        <th>Количество пропусков по неуважительной причине</th>
     </tr>
 </table></center>
 
@@ -28,7 +36,6 @@
             fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
             var estimateElement = document.createElement('td');
             estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';
-
             var elementContainer = document.createElement('tr');
             elementContainer.appendChild(fullNameElement);
             elementContainer.appendChild(estimateElement);
@@ -37,11 +44,6 @@
     }
     x.send(null);
 </script>
-
-<form action="/submit" method="POST">
-    <input name="name" value="Andrey">
-    <input name="surname" value="Viteny">
-</form>
 
 </body>
 </html>

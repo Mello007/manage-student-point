@@ -1,19 +1,12 @@
 package ru.university.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.university.controller.dto.SimpleTeacherDTO;
-import ru.university.controller.dto.TeacherToCreateDTO;
-import ru.university.entity.Student;
 import ru.university.entity.Teacher;
-import ru.university.service.StudentService;
 import ru.university.service.TeacherService;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 

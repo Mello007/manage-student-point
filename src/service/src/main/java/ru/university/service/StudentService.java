@@ -39,4 +39,13 @@ public class StudentService {
     public boolean addEstimate(Student student) {
         return false;
     }
+
+    @Transactional
+    public Student createStudent(String fullName, int estimate) {
+        Student student = new Student();
+        student.setFullName(fullName);
+        student.setEstimate(estimate);
+        sessionFactory.getCurrentSession().save(student);
+        return student;
+    }
 }

@@ -1,19 +1,78 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="main.css" rel="stylesheet">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/resources/script.js"></script>
     <title>Пример веб-страницы</title>
 </head>
 <body>
-<center><h1 class="ribbon"><strong class="ribbon-content">Список студентов</strong></h1></center>
+<center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
 
-<form action="/teacher/add"  method="POST">
-    <input name="fullName" value="Введите имя" type="text">
-    <input name="login" value="Введите логин" type="text">
-    <input name="password" value="Введите пароль" type="text">
-    <input type="submit" value="Отправить"/>
-</form>
+<label class="btn" for="modal-1">Управление преподавателями</label>
+<!-- Модальное окно -->
+<div class="modal">
+    <input class="modal-open" id="modal-1" type="checkbox" hidden>
+    <div class="modal-wrap" aria-hidden="true" role="dialog">
+        <label class="modal-overlay" for="modal-1"></label>
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2>Список всех преподавателей: </h2>
+            </div>
+            <div class="modal-body">
+                    <table id="teachers" class="features-table">
+                        <tr>
+                            <th>ФИО преподавателя</th>
+                        </tr>
+                    </table>
+            </div>
+            <div class="modal-header">
+                <h2>Добавить преподавтеля</h2>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-header">
+                <h2>Удалить преподавателя</h2>
+            </div>
+            <div class="modal-body">
+                <form action="/teacher/delete"  method="POST">
+                   // <input name="fullName" value="Введите имя для удаления" type="text">
+                    <br>
+                    <input type="submit" value="Удалить"/></br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <label class="btn btn-primary" for="modal-1">ОК</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<label class="btn" for="modal-2">Управление студентами</label>
+
+<div class="modal">
+    <input class="modal-open" id="modal-2" type="checkbox" hidden>
+    <div class="modal-wrap" aria-hidden="true" role="dialog">
+        <label class="modal-overlay" for="modal-2"></label>
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2>Управление студентами</h2>
+            </div>
+            <div class="modal-body">
+                <form action="/student/add"   method="POST">
+                 //   <input name="fullName" id="fullname_student" value="Введите ФИО студента" type="text">
+                 //   <input name="estimate" id="estimate_student" value="Введите его текущую оценку" type="text">
+                    <input type="submit" id="submit-add-student" value="Добавить студента"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <label class="btn btn-primary" for="modal-2">ОК</label>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <center><table id="all-student-table" class="features-table">
@@ -25,25 +84,48 @@
     </tr>
 </table></center>
 
-<script type="text/javascript">
-    var x = new XMLHttpRequest();
-    x.open("GET", "/student/all", true);
-    x.onload = function (){
-        var parsedStudents = JSON.parse(this.responseText);
-        var studentsTable = document.getElementById('all-student-table');
-        parsedStudents.forEach(function(item)  {
-            var fullNameElement = document.createElement('td');
-            fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
-            var estimateElement = document.createElement('td');
-            estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';
-            var elementContainer = document.createElement('tr');
-            elementContainer.appendChild(fullNameElement);
-            elementContainer.appendChild(estimateElement);
-            studentsTable.appendChild(elementContainer);
-        });
-    }
-    x.send(null);
-</script>
 
+<form id="teacher-add" onsubmit="sendTeacherAdding()" method="post" action="javascript:void(null);">
+    <input name="name" id="name" value="Введите имя" type="text">
+    <input name="login" id="login" value="Введите логин" type="text">
+    <input name="password" id="password" value="Введите пароль" type="text">
+    <br>
+    <input type="submit" id="submit-teacher-adding" value="Добавить"/></br>
+</form>
+
+<!--<script type="text/javascript">-->
+    <!--var x = new XMLHttpRequest();-->
+    <!--x.open("GET", "/student/all", true);-->
+    <!--x.onload = function (){-->
+        <!--var parsedStudents = JSON.parse(this.responseText);-->
+        <!--var studentsTable = document.getElementById('all-student-table');-->
+        <!--parsedStudents.forEach(function(item)  {-->
+            <!--var fullNameElement = document.createElement('td');-->
+            <!--fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';-->
+            <!--var estimateElement = document.createElement('td');-->
+            <!--estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';-->
+            <!--var elementContainer = document.createElement('tr');-->
+            <!--elementContainer.appendChild(fullNameElement);-->
+            <!--elementContainer.appendChild(estimateElement);-->
+            <!--studentsTable.appendChild(elementContainer);-->
+        <!--});-->
+    <!--};-->
+    <!--x.send(null);-->
+
+    <!--var teacher = new XMLHttpRequest();-->
+    <!--teacher.open("GET", "/teacher/all", true);-->
+    <!--teacher.onload = function (){-->
+        <!--var parsedTeacher = JSON.parse(this.responseText);-->
+        <!--var teacherTable = document.getElementById('teachers');-->
+        <!--parsedTeacher.forEach(function(t)  {-->
+            <!--var Name = document.createElement('td');-->
+            <!--Name.innerHTML = '<p>' + t['fullName'] + '</p>';-->
+            <!--var elementContainer1 = document.createElement('tr');-->
+            <!--elementContainer1.appendChild(Name);-->
+            <!--teacherTable.appendChild(elementContainer1);-->
+        <!--});-->
+    <!--};-->
+    <!--teacher.send(null);-->
+<!--</script>-->
 </body>
 </html>

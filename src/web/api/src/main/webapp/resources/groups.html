@@ -20,30 +20,43 @@
 </div></center>
 
 <script type="text/javascript">
-    var x = new XMLHttpRequest();
-    x.open("GET", "/group/groups", true);
-    x.onload = function (){
-        var parsedGroups = JSON.parse(this.responseText);
-         parsedGroups.forEach(function (group) {
+
+    function codeAddress() {
+        var x = new XMLHttpRequest();
+        x.open("GET", "/group/groups", true);
+        x.onload = function () {
+            showGroups(this.responseText);
+        };
+        x.send(null);
+    }
+    window.onload = codeAddress;
+
+    function showGroups(rawJSON){
+        var parsedGroups = JSON.parse(rawJSON);
+        parsedGroups.forEach(function (group) {
             var currentGroupDiv = document.getElementById('groups');
             var parsedStudents = group.students;
             var studentsTable = document.createElement('table');
             studentsTable.innerHTML = '<h1>' + group.name + '</h1>';
-            studentsTable.innerHTML += '<tr> <th>Имя и Фамилия студента</th> <th>Количество баллов</th> </tr>'
+            studentsTable.innerHTML += '<tr> <th>Имя и Фамилия студента</th> <th>Количество баллов</th> <th>Пропуски' +
+                    ' по уважительным причинам</th> <th>Пропуски по неуважительным причинам</th> </tr>'
             parsedStudents.forEach(function(item)  {
-                var fullNameElement = document.createElement('td');
-                fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
-                var estimateElement = document.createElement('td');
-                estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';
-                var elementContainer = document.createElement('tr');
-                elementContainer.appendChild(fullNameElement);
-                elementContainer.appendChild(estimateElement);
-                studentsTable.appendChild(elementContainer);
+                fillStudent(item, studentsTable);
             });
             currentGroupDiv.appendChild(studentsTable);
         })
+    };
+
+    function fillStudent(student, studentsTable) {
+        var fullNameElement = document.createElement('td');
+        fullNameElement.innerHTML = '<p>' + student['fullName'] + '</p>';
+        var estimateElement = document.createElement('td');
+        estimateElement.innerHTML = '<p>' + student['estimate'] + '</p>';
+        var elementContainer = document.createElement('tr');
+        elementContainer.appendChild(fullNameElement);
+        elementContainer.appendChild(estimateElement);
+        studentsTable.appendChild(elementContainer);
     }
-    x.send(null);
 </script>
 </body>
 </html>

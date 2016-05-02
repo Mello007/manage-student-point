@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class FrontController {
-
-
-    @RequestMapping("/")
+    @RequestMapping(value = "/")
     public String getMain() {
         return "resources/index.html";
     }

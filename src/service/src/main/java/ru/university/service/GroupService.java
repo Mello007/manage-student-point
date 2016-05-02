@@ -8,7 +8,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.university.entity.Attendance;
 import ru.university.entity.Group;
+import ru.university.entity.Student;
 import ru.university.entity.Teacher;
 import ru.university.service.security.Session;
 

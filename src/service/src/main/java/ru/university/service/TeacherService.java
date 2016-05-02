@@ -15,11 +15,7 @@ public class TeacherService {
     @Autowired SessionFactory sessionFactory;
 
     @Transactional
-    public Teacher createTeacher(String fullName, String login, String password) {
-        Teacher teacher = new Teacher();
-        teacher.setFullName(fullName);
-        teacher.setLogin(login);
-        teacher.setPassword(password);
+    public Teacher createTeacher(Teacher teacher) {
         sessionFactory.getCurrentSession().save(teacher);
         return teacher;
     }

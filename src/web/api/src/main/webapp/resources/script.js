@@ -1,17 +1,15 @@
 
     function sendTeacherAdding() {
-        alert("hello word");
-//        var name = document.getElementById('name');
-//        var login = document.getElementById('login');
-//        var pass = document.getElementById('password');
-        // var requestJSONparametr = "{\"fullName\": \"" + name.value + "\", \"login\": \"" + login.value + "\", \"password\": \"" + pass.value + "\"}";
-        var msg   = $('teacher-add').serialize();
+        var name = $('#fullName').val();
+        var login = $('#login').val();
+        var pass = $('#password').val();
+        var requestJSONparametr = "{\"fullName\": \"" + name + "\", \"login\": \"" + login + "\", \"password\": \"" + pass + "\"}";
         $.ajax({
             type: "POST",
             url: "/teacher/add",
             contentType: "application/json",
             dataType: 'json',
-            data: msg,
+            data: requestJSONparametr,
             success: function (data) {
                 alert("hello world");
             },

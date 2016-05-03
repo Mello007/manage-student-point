@@ -3,12 +3,19 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="main.css" rel="stylesheet">
+    <link href="calendar.css" rel="stylesheet">
+    <link href="tcal.css" rel="stylesheet">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/resources/script.js"></script>
+    <script type="text/javascript" src="/resources/tcal.js"></script>
     <title>Пример веб-страницы</title>
 </head>
 <body>
 <center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
+
+<form action="#">
+    <div><input type="text" name="date" class="tcal" value="" /></div>
+</form>
 
 <label class="btn" for="modal-1">Управление преподавателями</label>
 <!-- Модальное окно -->
@@ -29,7 +36,7 @@
                     </table>
             </div>
             <div class="modal-header">
-                <h2>Добавить преподавтеля</h2>
+                <h2>Добавить преподавателя</h2>
             </div>
             <div class="modal-body">
                 <form onsubmit="sendTeacherAdding()" action="javascript:void(null);">
@@ -65,17 +72,18 @@
         <label class="modal-overlay" for="modal-2"></label>
         <div class="modal-dialog">
             <div class="modal-header">
-                <h2>Управление студентами</h2>
+                <h2>Удалить студентама</h2>
             </div>
             <div class="modal-body">
-                <form action="/student/add"   method="POST">
-                    <br></br>
-                    <center><input name="fullName" id="fullname_student" value="Введите ФИО студента" size="50px" type="text">
-                    <br><br/>
-                      <input name="estimate" id="estimate_student" value="Введите его текущую оценку" size="50px" type="text">
-                        <br><br/>
-                    <input type="submit" id="submit-add-student" value="Добавить студента"/></center>
-                    <br><br/>
+                <form onsubmit="sendStudentAdding()" action="javascript:void(null);">
+                    <center>
+                    <br>
+                    <input id="fullname_student" value="Введите ФИО студента" size="50px" type="text">
+                    <input id="estimate_student" value="Введите его оценку" type="text">
+                    <br/>
+                        <br>
+                    <input type="submit" value="Добавить студента"/></br>
+                    <br/></center>
                 </form>
             </div>
             <div class="modal-footer">
@@ -86,6 +94,7 @@
 </div>
 
 
+
 <center><table id="all-student-table" class="features-table">
     <tr>
         <th>Имя и Фамилия студента</th>
@@ -93,6 +102,5 @@
         <th>Количество пропусков по уважительной причине</th>
         <th>Количество пропусков по неуважительной причине</th>
     </tr>
-</table></center>
 </body>
 </html>

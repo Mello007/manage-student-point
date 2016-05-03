@@ -28,6 +28,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframewor
                 <beans:value>ru.university.entity.Student</beans:value>
                 <beans:value>ru.university.entity.Group</beans:value>
                 <beans:value>ru.university.entity.Teacher</beans:value>
+                <beans:value>ru.university.entity.Estimate</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">

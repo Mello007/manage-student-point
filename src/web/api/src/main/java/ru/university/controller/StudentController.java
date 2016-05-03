@@ -23,7 +23,12 @@ public class StudentController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public Student add(@RequestParam String fullName, @RequestParam int estimate){
-        return studentService.createStudent(fullName, estimate);
+    public Student add(@RequestBody Student student){
+        return studentService.createStudent(student);
+    }
+
+    @RequestMapping(value = "date", method = RequestMethod.GET)
+    public List<Student> getStudentsByDate(@RequestParam String date){
+        return studentService.getAll();
     }
 }

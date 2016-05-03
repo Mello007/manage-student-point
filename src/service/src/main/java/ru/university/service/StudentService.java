@@ -1,6 +1,8 @@
 package ru.university.service;
 
 
+import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,14 @@ public class StudentService {
 
     @Transactional
     public List<Student> getAll() {
-        return sessionFactory.getCurrentSession().createCriteria(Student.class).list();
+        Query query = sessionFactory.openSession().createQuery("from Student");
+        List<Student> students = query.list();
+        for (Student students1 : students)
+        {
+            students1.getEstimate();
+            students1.getDateList();
+        }
+        return students;
     }
 
     public boolean addEstimate(Student student) {
@@ -41,10 +50,7 @@ public class StudentService {
     }
 
     @Transactional
-    public Student createStudent(String fullName, int estimate) {
-        Student student = new Student();
-        student.setFullName(fullName);
-        student.setEstimate(estimate);
+    public Student createStudent(Student student) {
         sessionFactory.getCurrentSession().save(student);
         return student;
     }

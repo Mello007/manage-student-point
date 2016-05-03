@@ -12,5 +12,6 @@ import java.util.Date;
 public class Attendance {
     @Id @GeneratedValue (strategy = GenerationType.TABLE) @Column(name = "attendance_id") private Long attendanceId;
     @Column private Date date;
-    @Column private int studentHere;
+    @Column private Integer respectCause;
+    @Column private Integer notRespectCause;
 }

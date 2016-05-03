@@ -10,7 +10,6 @@
     color: #2a2a2a;
     background: #fafafa;
     background-image: -moz-linear-gradient(top, #fff, #eaeaea, #fff); /* Firefox 3.6 */
-
     margin-top:5px;
     margin-bottom:5px;
 }
@@ -115,7 +114,7 @@ table {
 }
 th, td:first-child {
     background: #AFCDE7;
-    color: white;
+    color: black;
     padding: 10px 20px;
 }
 th, td {
@@ -213,6 +212,7 @@ th:first-child, td:first-child {
     z-index: 103;
 }
 .modal-body {
+
     overflow: auto;
 }
 .modal-body p {
@@ -263,4 +263,3 @@ th:first-child, td:first-child {
 .btn-primary:hover{
     background: #66A1D3;
 }
-

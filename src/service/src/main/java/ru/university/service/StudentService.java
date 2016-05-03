@@ -1,6 +1,7 @@
 package ru.university.service;
 
 
+import java.util.Date;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -53,5 +54,10 @@ public class StudentService {
     public Student createStudent(Student student) {
         sessionFactory.getCurrentSession().save(student);
         return student;
+    }
+
+    @Transactional
+    public List<Student> getWitInformationByDate(Date date) {
+        return null;
     }
 }

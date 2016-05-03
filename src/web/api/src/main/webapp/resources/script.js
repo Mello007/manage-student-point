@@ -37,33 +37,48 @@ function sendStudentAdding() {
             }
         });
     }
-    
 
-    var x = new XMLHttpRequest();
-    x.open("GET", "/student/date", true);
-    x.onload = function (){
-        var parsedStudents = JSON.parse(this.responseText);
-        var studentsTable = document.getElementById('all-student-table');
-        parsedStudents.forEach(function(item)  {
-            var fullNameElement = document.createElement('td');
-            fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
-            var estimateElement = document.createElement('td');
-            estimateElement.innerHTML = '<input type="text" value=' + item[''] + '</input>';
-            var elementContainer = document.createElement('tr');
-            var respectElement = document.createElement('td');
-            respectElement.innerHTML = '<input type="text" value=' + item[''] + '</input>';
-            var not_respectElement = document.createElement('td');
-            not_respectElement.innerHTML = '<input type="text" value=' + item[''] + '</input>';
-            elementContainer.appendChild(fullNameElement);
-            elementContainer.appendChild(estimateElement);
-            elementContainer.appendChild(respectElement);
-            elementContainer.appendChild(not_respectElement);
-            studentsTable.appendChild(elementContainer);
+$(window).load(function () {
+    fillStudentTable("");
+});
+
+    function fillStudentTable(urlT) {
+                $.ajax({
+            type: "GET",
+            url: "/student/date"+urlT,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (parsedStudents) {
+                var studentsTable = document.getElementById('all-student-table');
+                studentsTable.innerHTML="<tr><th>Имя и Фамилия студента</th><th>Количество баллов</th>" +
+                    "<th>Количество пропусков по уважительной причине</th>" +
+                    "<th>Количество пропусков по неуважительной причине</th></tr>"
+                parsedStudents.forEach(function(item)  {
+                    var fullNameElement = document.createElement('td');
+                    fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
+                    var estimateElement = document.createElement('td');
+                    var estimateValue = item.estimate === null? "" : item.estimate.estimate;
+                    estimateElement.innerHTML = "<input type='text' value=\"" + estimateValue + "\"/>";
+                    var elementContainer = document.createElement('tr');
+                    var respectElement = document.createElement('td');
+                    var respectValue = item.dateList === null? "" : item.dateList.respectCause;
+                    respectElement.innerHTML = "<input type='text' value=\"" + respectValue + "\"/>";
+                    var not_respectElement = document.createElement('td');
+                    var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
+                    not_respectElement.innerHTML = "<input type='text' value=\"" + notRespectCause + "\"/>";
+                    elementContainer.appendChild(fullNameElement);
+                    elementContainer.appendChild(estimateElement);
+                    elementContainer.appendChild(respectElement);
+                    elementContainer.appendChild(not_respectElement);
+                    studentsTable.appendChild(elementContainer);
+                });
+            },
+            error: function (data) {
+                alert("badly");
+            }
         });
-    };
-    if (curent_date === undefined) {
-        x.send(new Date);
-    } else x.send(curent_date);
+    }
+
 
     var teacher = new XMLHttpRequest();
     teacher.open("GET", "/teacher/all", true);

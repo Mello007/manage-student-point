@@ -250,9 +250,10 @@ function f_tcalGetInputs (b_active) {
 
 		a_result[a_result.length] = e_input;
 	} 
-	if (a_result != null && curent_date != a_result[0].value)
+	if (a_result != null && curent_date != a_result[0].value && a_result[0].value.length != 0)
 	{
 		curent_date = a_result[0].value;
+		fillStudentTable("?date="+curent_date);
 	}
 	return  b_active ? null : a_result;
 }

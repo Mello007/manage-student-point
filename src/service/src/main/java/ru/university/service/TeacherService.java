@@ -33,10 +33,10 @@ public class TeacherService {
         return teachers;
     }
 
-    public Teacher deleteTeaher (String fullname){
-        Teacher teacher = new Teacher();
-        Query query1 = sessionFactory.getCurrentSession().createQuery("DELETE FROM Teacher WHERE fullname = :fullname");
+    @Transactional
+    public int deleteTeaher (String fullname){
+        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Teacher WHERE fullName = :fullname");
         query1.setParameter("fullname", fullname);
-        return teacher;
+        return query1.executeUpdate();
     }
 }

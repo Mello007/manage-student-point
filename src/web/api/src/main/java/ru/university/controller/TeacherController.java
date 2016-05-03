@@ -33,7 +33,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public Teacher deleteTeacher(String fullname){
+    public int deleteTeacher(String fullname){
         return teacherService.deleteTeaher(fullname);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Table
 public class Student {
     @Id @GeneratedValue(strategy = GenerationType.TABLE) @Column(name = "student_id")  private Long studentId;
-    @ManyToMany @JoinTable(name="student_estimate",
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JoinTable(name="student_estimate",
             joinColumns={@JoinColumn(name="student_id")},
             inverseJoinColumns={@JoinColumn(name="estimate_id")})
     private List<Estimate> estimate;

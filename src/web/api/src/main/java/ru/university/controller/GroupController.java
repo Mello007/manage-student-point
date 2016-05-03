@@ -18,7 +18,6 @@ public class GroupController {
 
     @Autowired GroupService groupService;
 
-
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public Group getById(@PathVariable("id") Long id){
         return groupService.findById(id);

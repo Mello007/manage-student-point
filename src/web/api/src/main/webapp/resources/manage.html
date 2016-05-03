@@ -17,6 +17,7 @@
     <div class="modal-wrap" aria-hidden="true" role="dialog">
         <label class="modal-overlay" for="modal-1"></label>
         <div class="modal-dialog">
+            <div style="overflow: auto; height: 500px;">
             <div class="modal-header">
                 <h2>Список всех преподавателей: </h2>
             </div>
@@ -31,14 +32,20 @@
                 <h2>Добавить преподавтеля</h2>
             </div>
             <div class="modal-body">
-
+                <form onsubmit="sendTeacherAdding()" action="javascript:void(null);">
+                    <input id="fullName" value="Введите имя" type="text">
+                    <input id="login" value="Введите логин" type="text">
+                    <input id="password" value="Введите пароль" type="text">
+                    <br>
+                    <input type="submit" value="Добавить"/></br>
+                </form>
             </div>
             <div class="modal-header">
                 <h2>Удалить преподавателя</h2>
             </div>
             <div class="modal-body">
                 <form action="/teacher/delete"  method="POST">
-                   // <input name="fullName" value="Введите имя для удаления" type="text">
+                    <input name="fullName" value="Введите имя для удаления" type="text">
                     <br>
                     <input type="submit" value="Удалить"/></br>
                 </form>
@@ -62,9 +69,13 @@
             </div>
             <div class="modal-body">
                 <form action="/student/add"   method="POST">
-                 //   <input name="fullName" id="fullname_student" value="Введите ФИО студента" type="text">
-                 //   <input name="estimate" id="estimate_student" value="Введите его текущую оценку" type="text">
-                    <input type="submit" id="submit-add-student" value="Добавить студента"/>
+                    <br></br>
+                    <center><input name="fullName" id="fullname_student" value="Введите ФИО студента" size="50px" type="text">
+                    <br><br/>
+                      <input name="estimate" id="estimate_student" value="Введите его текущую оценку" size="50px" type="text">
+                        <br><br/>
+                    <input type="submit" id="submit-add-student" value="Добавить студента"/></center>
+                    <br><br/>
                 </form>
             </div>
             <div class="modal-footer">
@@ -83,50 +94,5 @@
         <th>Количество пропусков по неуважительной причине</th>
     </tr>
 </table></center>
-
-
-<form onsubmit="sendTeacherAdding()" action="javascript:void(null);">
-    <input id="fullName" value="Введите имя" type="text">
-    <input id="login" value="Введите логин" type="text">
-    <input id="password" value="Введите пароль" type="text">
-    <br>
-    <input type="submit" value="Добавить"/></br>
-</form>
-
-<!--<script type="text/javascript">-->
-    <!--var x = new XMLHttpRequest();-->
-    <!--x.open("GET", "/student/all", true);-->
-    <!--x.onload = function (){-->
-        <!--var parsedStudents = JSON.parse(this.responseText);-->
-        <!--var studentsTable = document.getElementById('all-student-table');-->
-        <!--parsedStudents.forEach(function(item)  {-->
-            <!--var fullNameElement = document.createElement('td');-->
-            <!--fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';-->
-            <!--var estimateElement = document.createElement('td');-->
-            <!--estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';-->
-            <!--var elementContainer = document.createElement('tr');-->
-            <!--elementContainer.appendChild(fullNameElement);-->
-            <!--elementContainer.appendChild(estimateElement);-->
-            <!--studentsTable.appendChild(elementContainer);-->
-        <!--});-->
-    <!--};-->
-    <!--x.send(null);-->
-
-    <!--var teacher = new XMLHttpRequest();-->
-    <!--teacher.open("GET", "/teacher/all", true);-->
-    <!--teacher.onload = function (){-->
-        <!--var parsedTeacher = JSON.parse(this.responseText);-->
-        <!--var teacherTable = document.getElementById('teachers');-->
-        <!--parsedTeacher.forEach(function(t)  {-->
-            <!--var Name = document.createElement('td');-->
-            <!--Name.innerHTML = '<p>' + t['fullName'] + '</p>';-->
-            <!--var elementContainer1 = document.createElement('tr');-->
-            <!--elementContainer1.appendChild(Name);-->
-            <!--teacherTable.appendChild(elementContainer1);-->
-        <!--});-->
-    <!--};-->
-    <!--teacher.send(null);-->
-<!--</script>-->
-
 </body>
 </html>

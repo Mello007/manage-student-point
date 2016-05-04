@@ -9,7 +9,6 @@ import ru.university.service.TeacherService;
 import java.util.ArrayList;
 import java.util.List;
 
-
 //@Secured("ROLE_TEACHER")
 @RestController
 @RequestMapping(value = "teacher", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

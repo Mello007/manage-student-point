@@ -70,13 +70,19 @@ $(window).load(function () {
                     inputRespectElement.onblur = function() {
                         sendRespectAdding(item.studentId, this.value, reqDate);
                     };
-                    var not_respectElement = document.createElement('td');
+                    var notrespectElement = document.createElement('td');
                     var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
-                    not_respectElement.innerHTML = "<input type='text' value=\"" + notRespectCause + "\"/>";
+                    var inputNotRespectElement = document.createElement('input');
+                    inputRespectElement.setAttribute('type', 'text');
+                    inputRespectElement.setAttribute('value', notRespectCause);
+                    notrespectElement.appendChild(inputNotRespectElement);
+                    inputNotRespectElement.onblur = function() {
+                        sendNotRespectAdding(item.studentId, this.value, reqDate);
+                    };
                     elementContainer.appendChild(fullNameElement);
                     elementContainer.appendChild(estimateElement);
                     elementContainer.appendChild(respectElement);
-                    elementContainer.appendChild(not_respectElement);
+                    elementContainer.appendChild(notrespectElement);
                     studentsTable.appendChild(elementContainer);
                 });
             },
@@ -96,6 +102,17 @@ $(window).load(function () {
             data: requestJSONparametr
         });
     }
+
+function sendNotRespectAdding(id, respect, date) {
+    var requestJSONparametr = "{\"id\": \"" + id + "\", \"respect\": \"" + respect + "\", \"date\": \"" + date + "\"}";
+    $.ajax({
+        type: "POST",
+        url: "/attendance/notrespect/add",
+        contentType: "application/json",
+        dataType: 'json',
+        data: requestJSONparametr
+    });
+}
 
 
     var teacher = new XMLHttpRequest();

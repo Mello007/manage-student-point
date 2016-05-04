@@ -18,28 +18,37 @@ public class AttendanceService {
 
     @Transactional
     public void addAttendanceToStudent(long studentId, Attendance attendance) {
+        TimeIgnoringComparator comparator = new TimeIgnoringComparator();
         Student student = sessionFactory.getCurrentSession().get(Student.class, studentId);
         List<Attendance> attendances = student.getDateList();
-        attendances.add(attendance);
-        student.setDateList(attendances);
+        boolean finded = false;
+        for (Attendance attendancc : attendances){
+            if (comparator.compare(attendancc.getDate(), attendance.getDate())) {
+                attendancc.setRespectCause(attendance.getRespectCause());
+                finded = true;
+            }
+        }
+        if (!finded) {
+            attendances.add(attendance);
+        }
+        sessionFactory.getCurrentSession().merge(student);
     }
 
     @Transactional
     public void addNotRespectAttendanceToStudent(long studentId, Attendance attendance) {
         TimeIgnoringComparator comparator = new TimeIgnoringComparator();
-        Student student = sessionFactory.openSession().load(Student.class, studentId);
+        Student student = sessionFactory.getCurrentSession().get(Student.class, studentId);
         List<Attendance> attendances = student.getDateList();
-        Attendance currentAttendance = null;
+        boolean finded = false;
         for (Attendance attendancc : attendances){
             if (comparator.compare(attendancc.getDate(), attendance.getDate())) {
-                currentAttendance = attendancc;
+                attendancc.setNotRespectCause(attendance.getNotRespectCause());
+                finded = true;
             }
         }
-        if (currentAttendance == null) {
+        if (!finded) {
             attendances.add(attendance);
-        } else {
-            currentAttendance.setNotRespectCause(attendance.getNotRespectCause());
-            sessionFactory.getCurrentSession().persist(currentAttendance);
         }
+        sessionFactory.getCurrentSession().merge(student);
     }
 }

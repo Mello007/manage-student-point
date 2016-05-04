@@ -7,5 +7,6 @@ import lombok.Data;
 public class AttendanceDTO {
     private int id;
     private int respect;
-    private Date date;
+    private int notRespectCause;
+    private String date;
 }

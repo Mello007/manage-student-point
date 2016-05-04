@@ -1,6 +1,9 @@
 package ru.university.controller;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +18,35 @@ import ru.university.service.StudentService;
 @RestController
 @RequestMapping("attendance")
 public class AttendanceController {
-    @Autowired
-    AttendanceService attendanceService;
-
+    @Autowired AttendanceService attendanceService;
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "respect/add", method = RequestMethod.POST)
-    public void addRespect(@RequestBody AttendanceDTO attendanceDTO){
-        if (attendanceDTO.getDate() == null) {
-            attendanceDTO.setDate(new Date());
-        }
+    public void addRespect(@RequestBody AttendanceDTO attendanceDTO) throws ParseException {
         Attendance attendance = new Attendance();
-        attendance.setDate(attendanceDTO.getDate());
+        if (attendanceDTO.getDate().equals("null")) {
+            attendance.setDate(new Date());
+        } else {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dateFormat.parse(attendanceDTO.getDate());
+            attendance.setDate(date);
+        }
         attendance.setRespectCause(attendanceDTO.getRespect());
         attendanceService.addAttendanceToStudent(attendanceDTO.getId(), attendance);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "notrespect/add", method = RequestMethod.POST)
-    public void addNotRespect(@RequestBody AttendanceDTO attendanceDTO){
-        if (attendanceDTO.getDate() == null) {
-            attendanceDTO.setDate(new Date());
-        }
+    public void addNotRespect(@RequestBody AttendanceDTO attendanceDTO) throws ParseException {
         Attendance attendance = new Attendance();
-        attendance.setDate(attendanceDTO.getDate());
-        attendance.setRespectCause(attendanceDTO.getRespect());
+        if (attendanceDTO.getDate().equals("null")) {
+            attendance.setDate(new Date());
+        } else {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = dateFormat.parse(attendanceDTO.getDate());
+            attendance.setDate(date);
+        }
+        attendance.setNotRespectCause(attendanceDTO.getNotRespectCause());
         attendanceService.addNotRespectAttendanceToStudent(attendanceDTO.getId(), attendance);
     }
 }

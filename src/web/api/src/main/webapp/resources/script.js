@@ -61,8 +61,15 @@ $(window).load(function () {
                     estimateElement.innerHTML = "<input type='text' value=\"" + estimateValue + "\"/>";
                     var elementContainer = document.createElement('tr');
                     var respectElement = document.createElement('td');
+                    var inputRespectElement = document.createElement('input');
                     var respectValue = item.dateList === null? "" : item.dateList.respectCause;
-                    respectElement.innerHTML = "<input type='text' value=\"" + respectValue + "\"/>";
+                    inputRespectElement.setAttribute('type', 'text');
+                    inputRespectElement.setAttribute('value', respectValue);
+                    respectElement.appendChild(inputRespectElement);
+                    var reqDate = curent_date === undefined ? new Date : curent_date;
+                    inputRespectElement.onblur = function() {
+                        sendRespectAdding(item.studentId, this.value, reqDate);
+                    };
                     var not_respectElement = document.createElement('td');
                     var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
                     not_respectElement.innerHTML = "<input type='text' value=\"" + notRespectCause + "\"/>";
@@ -76,6 +83,17 @@ $(window).load(function () {
             error: function (data) {
                 alert("badly");
             }
+        });
+    }
+
+    function sendRespectAdding(id, respect, date) {
+        var requestJSONparametr = "{\"id\": \"" + id + "\", \"respect\": \"" + respect + "\", \"date\": \"" + date + "\"}";
+        $.ajax({
+            type: "POST",
+            url: "/attendance/respect/add",
+            contentType: "application/json",
+            dataType: 'json',
+            data: requestJSONparametr
         });
     }
 

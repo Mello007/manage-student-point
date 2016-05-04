@@ -38,8 +38,7 @@ public class StudentService {
     public List<Student> getAll() {
         Query query = sessionFactory.openSession().createQuery("from Student");
         List<Student> students = query.list();
-        for (Student students1 : students)
-        {
+        for (Student students1 : students) {
             students1.getEstimate();
             students1.getDateList();
         }

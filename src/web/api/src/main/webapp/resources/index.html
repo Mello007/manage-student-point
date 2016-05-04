@@ -31,10 +31,28 @@
             var fullNameElement = document.createElement('td');
             fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
             var estimateElement = document.createElement('td');
-            estimateElement.innerHTML = '<p>' + item['estimate'] + '</p>';
+            var estimateList = item['estimate'];
+            var estimateValue = 0;
+            estimateList.forEach(function(item, i, arr) {
+                estimateValue+=item.estimate;
+            });
+            estimateElement.innerHTML = '<p>' + estimateValue + '</p>';
+            var respectElement = document.createElement('td');
+            var notRespectElement = document.createElement('td');
+            var respectList = item['dateList'];
+            var respectValue = 0;
+            var notRespectValue = 0;
+            respectList.forEach(function(item, i, arr) {
+                respectValue+=item.respectCause;
+                notRespectValue+=item.notRespectCause;
+            });
+            respectElement.innerHTML = '<p>' + respectValue + '</p>';
+            notRespectElement.innerHTML = '<p>' + notRespectValue + '</p>';
             var elementContainer = document.createElement('tr');
             elementContainer.appendChild(fullNameElement);
             elementContainer.appendChild(estimateElement);
+            elementContainer.appendChild(respectElement);
+            elementContainer.appendChild(notRespectElement);
             studentsTable.appendChild(elementContainer);
         });
     }

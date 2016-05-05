@@ -12,11 +12,13 @@
 <body>
 <center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
 
+
 <form action="#">
-    <div><input type="text" name="date" class="tcal" value="" /></div>
+    <div id="name_calendar"><h2>Выбор даты</h2></div>
+    <div id="calendar"><input type="text" name="date" class="tcal" value="" /></div>
 </form>
 
-<label class="btn" for="modal-1">Управление преподавателями</label>
+<label class="btn" for="modal-1" id="manage_teacher">Управление преподавателями</label>
 <!-- Модальное окно, которое выскакивает по нажатию кнопки-->
 <div class="modal">
     <input class="modal-open" id="modal-1" type="checkbox" hidden>

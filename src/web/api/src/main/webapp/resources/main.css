@@ -282,3 +282,21 @@ span.highlight {
 
 span.splink {
     color: #0A5794; cursor: pointer; }
+
+#calendar{
+    position: absolute;
+    margin-left: 1100px;
+    margin-top: 10px;
+}
+
+#name_calendar{
+    font-family: anonymous-pro, sans-serif;
+    position: absolute;
+    margin-left: 1100px;
+    margin-top: -40px;
+}
+
+#manage_teacher{
+    position: absolute;
+    margin-right: 450px;
+}

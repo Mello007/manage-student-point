@@ -17,7 +17,7 @@
 </form>
 
 <label class="btn" for="modal-1">Управление преподавателями</label>
-<!-- Модальное окно -->
+<!-- Модальное окно, которое выскакивает по нажатию кнопки-->
 <div class="modal">
     <input class="modal-open" id="modal-1" type="checkbox" hidden>
     <div class="modal-wrap" aria-hidden="true" role="dialog">
@@ -38,23 +38,23 @@
                 <h2>Добавить преподавателя</h2>
             </div>
             <div class="modal-body">
-                <form onsubmit="sendTeacherAdding()" action="javascript:void(null);">
-                    <input id="fullName" value="Введите имя" type="text">
-                    <input id="login" value="Введите логин" type="text">
-                    <input id="password" value="Введите пароль" type="text">
+               <center> <form onsubmit="sendTeacherAdding()" action="javascript:void(null);">
+                    <input id="fullName" placeholder="Введите имя" type="text">
+                    <input id="login" placeholder="Введите логин" type="text">
+                    <input id="password" placeholder="Введите пароль" type="text">
                     <br>
                     <input type="submit" value="Добавить"/></br>
-                </form>
+                </form></center>
             </div>
             <div class="modal-header">
                 <h2>Удалить преподавателя</h2>
             </div>
             <div class="modal-body">
-                <form action="/teacher/delete"  method="POST">
-                    <input name="fullname" value="Введите имя для удаления" type="text">
+               <center> <form action="/teacher/delete"  method="POST">
+                    <input name="fullname" placeholder="Введите ФИО для удаления" type="text">
                     <br>
                     <input type="submit" value="Удалить"/></br>
-                </form>
+                </form></center>
             </div>
             <div class="modal-footer">
                 <label class="btn btn-primary" for="modal-1">ОК</label>
@@ -77,8 +77,8 @@
                 <form onsubmit="sendStudentAdding()" action="javascript:void(null);">
                     <center>
                     <br>
-                    <input id="fullname_student" value="Введите ФИО студента" size="50px" type="text">
-                    <input id="estimate_student" value="Введите его оценку" type="text">
+                    <input id="fullname_student" placeholder="Введите ФИО студента" size="50px" type="text">
+                    <input id="estimate_student" placeholder="Введите его оценку" type="text">
                     <br/>
                         <br>
                     <input type="submit" value="Добавить студента"/></br>
@@ -94,7 +94,7 @@
 
 
 
-<center><table id="all-student-table" class="features-table">
+<table id="all-student-table" class="features-table">
     <tr>
         <th>Имя и Фамилия студента</th>
         <th>Количество баллов</th>

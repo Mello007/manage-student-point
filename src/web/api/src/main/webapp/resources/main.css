@@ -96,14 +96,19 @@ H1:hover {
 /*Кнопка*/
 
 a.great_btn {
-    background: linear-gradient(to bottom, #0bc408 0%,#09a206 100%);
-    border: 2px dashed #226fbe;
+    padding-left: 1000px;
+    size: 500px;
+    border: 2px #226fbe;
 }
 a.great_btn:hover{
     background: transparent;
     color: #226fbe;
 }
 
+button{
+    width: 250px;
+    height: 26px;
+}
 
 /*Оформление таблицы*/
 table {
@@ -214,6 +219,8 @@ th:first-child, td:first-child {
 .modal-body {
 
     overflow: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 .modal-body p {
     margin: 0;
@@ -246,11 +253,11 @@ th:first-child, td:first-child {
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
-    padding: 8px 15px;
+    padding: 9px 16px;
     text-decoration: none;
     text-align: center;
-    min-width: 60px;
-    position: relative;
+    min-width: 80px;
+    right: 500px;
 }
 .btn:hover, .btn:focus {
     background: #f2f2f2;
@@ -263,3 +270,15 @@ th:first-child, td:first-child {
 .btn-primary:hover{
     background: #66A1D3;
 }
+
+span.highlight {
+    background-color: #C6D9DB; cursor: pointer; }
+
+span.splink {
+    color: #0A5794; cursor: pointer; }
+
+span.highlight {
+    background-color: #C6D9DB; cursor: pointer; }
+
+span.splink {
+    color: #0A5794; cursor: pointer; }

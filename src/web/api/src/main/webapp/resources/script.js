@@ -131,7 +131,6 @@ function sendNotRespectAdding(id, respect, date) {
     });
 }
 
-
     var teacher = new XMLHttpRequest();
     teacher.open("GET", "/teacher/all", true);
     teacher.onload = function (){
@@ -146,6 +145,6 @@ function sendNotRespectAdding(id, respect, date) {
         });
     };
     teacher.send(null);
-    
-    
+
+
     

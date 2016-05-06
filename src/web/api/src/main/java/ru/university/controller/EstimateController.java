@@ -20,6 +20,18 @@ public class EstimateController {
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public void add(@RequestBody EstimateDTO estimate) throws ParseException {
+        Long userId = estimate.getId();
+        estimateService.add(parseEstimate(estimate), userId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "addext", method = RequestMethod.POST)
+    public void addExtension(@RequestBody EstimateDTO estimate) throws ParseException {
+        Long userId = estimate.getId();
+        estimateService.addExtension(parseEstimate(estimate), userId);
+    }
+
+    private Estimate parseEstimate(EstimateDTO estimate) throws ParseException {
         Estimate estimat = new Estimate();
         if (estimate.getDate().equals("null")) {
             estimat.setDate(new Date());
@@ -29,7 +41,6 @@ public class EstimateController {
             estimat.setDate(date);
         }
         estimat.setEstimate(estimate.getEstimate());
-        Long userId = estimate.getId();
-        estimateService.add(estimat, userId);
+        return estimat;
     }
 }

@@ -13,7 +13,7 @@ function sendStudentAdding() {
             alert("Студент успешно добавлен!");
         },
         error: function (data) {
-            alert("Не удалось добавить студента!");
+            alert("Не удалось добавить студента! Вы ввели неправильные значения! Попробуйте еще раз");
         }
     });
 }
@@ -30,10 +30,10 @@ function sendStudentAdding() {
             dataType: 'json',
             data: requestJSONparametr,
             success: function (data) {
-                alert("Учитель успешно добавлен!");
+                alert("Преподаватель успешно добавлен!");
             },
             error: function (data) {
-                alert("badly");
+                alert("Не удалось добавить преподавателя! Вы ввели неправильные значения! Попробуйте еще раз");
             }
         });
     }
@@ -50,13 +50,15 @@ $(window).load(function () {
             dataType: 'json',
             success: function (parsedStudents) {
                 var studentsTable = document.getElementById('all-student-table');
-                studentsTable.innerHTML="<tr><th>Имя и Фамилия студента</th><th>Количество баллов</th>" +
+                studentsTable.innerHTML="<tr><th>Имя и Фамилия студента</th><th>Основные баллы</th>" +
+                    "<th>Дополнительные баллы</th>" +
                     "<th>Количество пропусков по уважительной причине</th>" +
                     "<th>Количество пропусков по неуважительной причине</th></tr>"
                 parsedStudents.forEach(function(item)  {
                     var reqDate = curent_date === undefined ? new Date : curent_date;
                     var fullNameElement = document.createElement('td');
                     fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
+
                     var estimateElement = document.createElement('td');
                     var estimateValue = item.estimate === null? "" : item.estimate.estimate;
                     var inputEstimateElement = document.createElement('input');
@@ -66,6 +68,18 @@ $(window).load(function () {
                         sendEstimateAdding(item.studentId, this.value, reqDate);
                     };
                     estimateElement.appendChild(inputEstimateElement);
+
+
+                    var extEstimateElement = document.createElement('td');
+                    var exEstimateValue = item.extEstimate === null? "" : item.extEstimate.estimate;
+                    var exInputEstimateElement = document.createElement('input');
+                    exInputEstimateElement.setAttribute('type', 'text');
+                    exInputEstimateElement.setAttribute('value', exEstimateValue);
+                    exInputEstimateElement.onblur = function() {
+                        sendExEstimateAdding(item.studentId, this.value, reqDate);
+                    };
+                    extEstimateElement.appendChild(exInputEstimateElement);
+                    
                     var elementContainer = document.createElement('tr');
                     var respectElement = document.createElement('td');
                     var respectValue = item.dateList === null? "" : item.dateList.respectCause;
@@ -87,6 +101,7 @@ $(window).load(function () {
                     };
                     elementContainer.appendChild(fullNameElement);
                     elementContainer.appendChild(estimateElement);
+                    elementContainer.appendChild(extEstimateElement);
                     elementContainer.appendChild(respectElement);
                     elementContainer.appendChild(notrespectElement);
                     studentsTable.appendChild(elementContainer);
@@ -109,6 +124,16 @@ $(window).load(function () {
         });
     }
 
+function sendExEstimateAdding(id, estimate, date) {
+    var requestJSONparametr = "{\"id\": \"" + id + "\", \"estimate\": \"" + estimate + "\", \"date\": \"" + date + "\"}";
+    $.ajax({
+        type: "POST",
+        url: "/estimatecontroller/addext",
+        contentType: "application/json",
+        dataType: 'json',
+        data: requestJSONparametr
+    });
+}
     function sendRespectAdding(id, respect, date) {
         var requestJSONparametr = "{\"id\": \"" + id + "\", \"respect\": \"" + respect + "\", \"date\": \"" + date + "\"}";
         $.ajax({

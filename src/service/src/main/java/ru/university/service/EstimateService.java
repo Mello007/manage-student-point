@@ -16,9 +16,20 @@ public class EstimateService {
 
     @Transactional
     public void add(Estimate estimate, long userId) {
-        TimeIgnoringComparator comparator = new TimeIgnoringComparator();
         Student student = sessionFactory.getCurrentSession().get(Student.class, userId);
         List<Estimate> estimates = student.getEstimate();
+        estimateAdding(estimates, estimate, student);
+    }
+
+    @Transactional
+    public void addExtension(Estimate estimate, long userId) {
+        Student student = sessionFactory.getCurrentSession().get(Student.class, userId);
+        List<Estimate> estimates = student.getExtensionEstimate();
+        estimateAdding(estimates, estimate, student);
+    }
+
+    private void estimateAdding(List<Estimate> estimates, Estimate estimate, Student student){
+        TimeIgnoringComparator comparator = new TimeIgnoringComparator();
         boolean finded = false;
         for (Estimate estimate1 : estimates) {
             if (comparator.compare(estimate1.getDate(), estimate.getDate())) {

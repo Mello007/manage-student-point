@@ -20,4 +20,9 @@ public class Student {
             joinColumns={@JoinColumn(name="student_id")},
             inverseJoinColumns={@JoinColumn(name="date_id")})
     private List<Attendance> dateList;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY) @JoinTable(name="student_extension_estimate",
+            joinColumns={@JoinColumn(name="student_id")},
+            inverseJoinColumns={@JoinColumn(name="estimate_id")})
+    private List<Estimate> extensionEstimate;
 }

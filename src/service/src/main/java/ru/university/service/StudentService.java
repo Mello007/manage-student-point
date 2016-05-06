@@ -40,6 +40,7 @@ public class StudentService {
         List<Student> students = query.list();
         for (Student students1 : students) {
             students1.getEstimate();
+            students1.getExtensionEstimate();
             students1.getDateList();
         }
         return students;

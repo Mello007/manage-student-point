@@ -63,9 +63,17 @@ public class StudentController {
                     estimation = estimate;
                 }
             }
+            Estimate extEstimation = null;
+            for (Estimate estimate : student.getExtensionEstimate()) {
+                if (timeIgnoringComparator.compare(estimate.getDate(), date)) {
+                    extEstimation = estimate;
+                }
+            }
+
             dateStudent.setDateList(attendanceProperty);
             dateStudent.setStudentId(student.getStudentId());
             dateStudent.setEstimate(estimation);
+            dateStudent.setExtEstimate(extEstimation);
             dateStudents.add(dateStudent);
         }
         return dateStudents;

@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping(value = "group")
 public class GroupController {
 
-
     @Autowired GroupService groupService;
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)

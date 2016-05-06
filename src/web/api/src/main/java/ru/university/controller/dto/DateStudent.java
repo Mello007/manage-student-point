@@ -10,6 +10,7 @@ import ru.university.entity.Estimate;
 public class DateStudent {
     private Long studentId;
     private Estimate estimate;
+    private Estimate extEstimate;
     private String fullName;
     private Attendance dateList;
 }

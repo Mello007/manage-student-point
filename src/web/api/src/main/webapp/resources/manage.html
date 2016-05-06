@@ -12,7 +12,6 @@
 <body>
 <center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
 
-
 <form action="#">
     <div id="name_calendar"><h2>Выбор даты</h2></div>
     <div id="calendar"><input type="text" name="date" class="tcal" value="" /></div>
@@ -52,10 +51,10 @@
                 <h2>Удалить преподавателя</h2>
             </div>
             <div class="modal-body">
-               <center> <form action="/teacher/delete"  method="POST">
+               <center> <form action="/teacher/delete" onsubmit=""  method="POST">
                     <input name="fullname" placeholder="Введите ФИО для удаления" type="text">
                     <br>
-                    <input type="submit" value="Удалить"/></br>
+                    <input type="submit"value="Удалить"/></br>
                 </form></center>
             </div>
             <div class="modal-footer">
@@ -73,7 +72,7 @@
         <label class="modal-overlay" for="modal-2"></label>
         <div class="modal-dialog">
             <div class="modal-header">
-                <h2>Удалить студента</h2>
+                <h2>Добавить студента студента</h2>
             </div>
             <div class="modal-body">
                 <form onsubmit="sendStudentAdding()" action="javascript:void(null);">
@@ -93,8 +92,6 @@
         </div>
     </div>
 </div>
-
-
 
 <table id="all-student-table" class="features-table">
     <tr>

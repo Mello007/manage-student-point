@@ -10,13 +10,16 @@ import ru.university.entity.Attendance;
 import ru.university.entity.Student;
 import ru.university.util.TimeIgnoringComparator;
 
-@Service
+
+
+@Service //Аннотация, которая показывает, что данный Класс является сервисом
+
+// Публичный класс Управление посещаемостью.
+
 public class AttendanceService {
     @Autowired
-    SessionFactory sessionFactory;
-
-
-    @Transactional
+    SessionFactory sessionFactory; // Создаем экземпляр класс SessionFactory который подключается к БД
+    @Transactional //Аннотация, которая
     public void addAttendanceToStudent(long studentId, Attendance attendance) {
         TimeIgnoringComparator comparator = new TimeIgnoringComparator();
         Student student = sessionFactory.getCurrentSession().get(Student.class, studentId);

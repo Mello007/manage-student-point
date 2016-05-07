@@ -8,6 +8,8 @@ import java.util.List;
 @Data
 @Entity
 @Table
+
+//Класс учитель, в котором описаны поля: логин, пароль, полное имя.
 public class Teacher {
     @Id @GeneratedValue(strategy = GenerationType.TABLE) @Column(name = "teacher_id")  private Long teacherId;
     @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)

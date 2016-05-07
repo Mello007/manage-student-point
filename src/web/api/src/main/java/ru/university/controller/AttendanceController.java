@@ -15,8 +15,10 @@ import ru.university.entity.Student;
 import ru.university.service.AttendanceService;
 import ru.university.service.StudentService;
 
-@RestController
-@RequestMapping("attendance")
+
+
+@RestController //Аннотация, которая показывает, что данный класс является контроллером
+@RequestMapping("attendance") //Адрес доступа к контроллеру
 public class AttendanceController {
     @Autowired AttendanceService attendanceService;
 

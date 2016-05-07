@@ -1,61 +1,65 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <link href="main.css" rel="stylesheet">
+    <link href="/resources/main.css" rel="stylesheet">
+    <link href="/resources/jquery.datetimepicker.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="/resources/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/resources/getstudents.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Пример веб-страницы</title>
+    <script src="/resources/jquery.datetimepicker.full.js"></script>
 </head>
 <body>
-<center><h1 class="ribbon"><strong class="ribbon-content">Список студентов</strong></h1></center>
+<title>Система управления баллами по АИП для студентов УИР</title>
+<center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
+<a href="/login" target="_blank" class="great_btn">
+    <right> <button>Вход для преподавателя</button></right>
+</a>
 
-<form action="/teacher/add"  method="POST">
-    <input name="fullName" value="Введите имя" type="text">
-    <input name="login" value="Введите логин" type="text">
-    <input name="password" value="Введите пароль" type="text">
-    <input type="submit" value="Отправить"/>
-</form>
+<p>
+    <input id="date_timepicker_start" type="text" />
+    <input id="date_timepicker_end" type="text" />
+    <input type="button" id="find" value="Найти">
+</p>
+<table id="all-student-table" class="features-table">
+    <thead>
+    <tr>
+        <th>Имя и Фамилия студента</th>
+        <th>Количество баллов</th>
+        <th>Количество пропусков студента</th>
+    </tr>
+    </thead>
+    <tbody id="all-student">
+    </tbody>
+</table>
 
-<center><div id="groups">
-
-</div></center>
 
 <script type="text/javascript">
-    function codeAddress() {
-        var x = new XMLHttpRequest();
-        x.open("GET", "/group/groups", true);
-        x.onload = function () {
-            showGroups(this.responseText);
-        };
-        x.send(null);
-    }
-    window.onload = codeAddress;
+    jQuery(function(){
+        jQuery('#date_timepicker_start').datetimepicker({
+            format:'Y/m/d',
+            onShow:function( ct ){
+                this.setOptions({
+                    maxDate:jQuery('#date_timepicker_end').val()?jQuery('#date_timepicker_end').val():false
+                })
+            },
+            timepicker:false
+        });
+        jQuery('#date_timepicker_end').datetimepicker({
+            format:'Y/m/d',
+            onShow:function( ct ){
+                this.setOptions({
+                    minDate:jQuery('#date_timepicker_start').val()?jQuery('#date_timepicker_start').val():false
+                })
+            },
+            timepicker:false
+        });
+    });
 
-    function showGroups(rawJSON){
-        var parsedGroups = JSON.parse(rawJSON);
-        parsedGroups.forEach(function (group) {
-            var currentGroupDiv = document.getElementById('groups');
-            var parsedStudents = group.students;
-            var studentsTable = document.createElement('table');
-            studentsTable.innerHTML = '<h1>' + group.name + '</h1>';
-            studentsTable.innerHTML += '<tr> <th>Имя и Фамилия студента</th> <th>Количество баллов</th> <th>Пропуски' +
-                    ' по уважительным причинам</th> <th>Пропуски по неуважительным причинам</th> </tr>'
-            parsedStudents.forEach(function(item)  {
-                fillStudent(item, studentsTable);
-            });
-            currentGroupDiv.appendChild(studentsTable);
-        })
-    };
-
-    function fillStudent(student, studentsTable) {
-        var fullNameElement = document.createElement('td');
-        fullNameElement.innerHTML = '<p>' + student['fullName'] + '</p>';
-        var estimateElement = document.createElement('td');
-        estimateElement.innerHTML = '<p>' + student['estimate'] + '</p>';
-        var elementContainer = document.createElement('tr');
-        elementContainer.appendChild(fullNameElement);
-        elementContainer.appendChild(estimateElement);
-        studentsTable.appendChild(elementContainer);
-    }
+    $('#find').click(function () {
+        var dateFrom = $('#date_timepicker_start').val();
+        var dateTo = $('#date_timepicker_end').val();
+    });
 </script>
 </body>
 </html>

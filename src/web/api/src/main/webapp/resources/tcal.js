@@ -253,9 +253,6 @@ function f_tcalGetInputs (b_active) {
 	if (a_result != null && curent_date != a_result[0].value && a_result[0].value.length != 0)
 	{
 		curent_date = a_result[0].value;
-		// curent_date = curent_date.replace(new RegExp("/",'g'),"-");
-		// curent_date = curent_date.substr(curent_date.length-4, 4) + '-' + curent_date.substr(0, curent_date.length-5);
-		// curent_date = new Date(curent_date);
 		fillStudentTable("?date="+curent_date);
 	}
 	return  b_active ? null : a_result;

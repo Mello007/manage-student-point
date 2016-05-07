@@ -108,7 +108,7 @@ $(window).load(function () {
                 });
             },
             error: function (data) {
-                alert("badly");
+                alert("Не удалось загрузить студентов!");
             }
         });
     }

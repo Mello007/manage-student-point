@@ -118,6 +118,7 @@ table {
     text-align: center;
 }
 th, td:first-child {
+    cursor: pointer;
     background: #AFCDE7;
     color: black;
     padding: 10px 20px;
@@ -131,12 +132,9 @@ td {
     background: #D8E6F3;
 }
 th:first-child, td:first-child {
+    cursor: pointer;
     text-align: left;
 }
-
-
-/*Работа с модальными окнами*/
-
 
 
 /* Стили модального окна */

@@ -17,6 +17,8 @@
     <div id="calendar"><input type="text" name="date" class="tcal" value="" /></div>
 </form>
 
+<label class="btn" for="modal-1" id="choice_date">Выбрать промежуток дат</label>
+
 <label class="btn" for="modal-1" id="manage_teacher">Управление преподавателями</label>
 <!-- Модальное окно, которое выскакивает по нажатию кнопки-->
 <div class="modal">
@@ -72,7 +74,7 @@
         <label class="modal-overlay" for="modal-2"></label>
         <div class="modal-dialog">
             <div class="modal-header">
-                <h2>Добавить студента студента</h2>
+                <h2>Добавить студента</h2>
             </div>
             <div class="modal-body">
                 <form onsubmit="sendStudentAdding()" action="javascript:void(null);">
@@ -84,6 +86,23 @@
                         <br>
                     <input type="submit" value="Добавить студента"/></br>
                     <br/></center>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <label class="btn btn-primary" for="modal-2">ОК</label>
+            </div>
+            <div class="modal-header">
+                <h2>Удалить студента</h2>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="sendStudentDelete()" action="javascript:void(null);">
+                    <center>
+                        <br>
+                        <input id="full_name" placeholder="Введите ФИО студента" size="50px" type="text">
+                        <br/>
+                        <br>
+                        <input type="submit" value="Удалить студента"/></br>
+                        <br/></center>
                 </form>
             </div>
             <div class="modal-footer">

@@ -40,6 +40,11 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public int deleteStudent(String fullname){
+        return studentService.delete(fullname);
+    }
+
     @RequestMapping(value = "date", method = RequestMethod.GET)
     public List<DateStudent> getStudentsByDate(@RequestParam(required = false, value = "date") Date date){
         if (date == null) {
@@ -69,7 +74,6 @@ public class StudentController {
                     extEstimation = estimate;
                 }
             }
-
             dateStudent.setDateList(attendanceProperty);
             dateStudent.setStudentId(student.getStudentId());
             dateStudent.setEstimate(estimation);

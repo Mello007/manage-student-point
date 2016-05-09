@@ -298,3 +298,8 @@ span.splink {
     position: absolute;
     margin-right: 450px;
 }
+
+#choice_date{
+    position: absolute;
+    margin-right: -200px;
+}

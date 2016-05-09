@@ -18,6 +18,25 @@ function sendStudentAdding() {
     });
 }
 
+
+function sendStudentDelete() {
+    var name = $('#full_name').val();
+    var requestJSONparametr = "{\"fullName\": \"" + name + "\"}";
+    $.ajax({
+        type: "POST",
+        url: "/student/delete",
+        contentType: "application/json",
+        dataType: 'json',
+        data: requestJSONparametr,
+        success: function (data) {
+            alert("Студент успешно удален!");
+        },
+        error: function (data) {
+            alert("Не удалось удалить студента! Возможно, вы ввели неправильно имя либо ввели недопустимое значение имени");
+        }
+    });
+}
+
     function sendTeacherAdding() {
         var name = $('#fullName').val();
         var login = $('#login').val();
@@ -38,11 +57,16 @@ function sendStudentAdding() {
         });
     }
 
+
+
+
+
 $(window).load(function () {
     fillStudentTable("");
 });
 
     function fillStudentTable(urlT) {
+            
                 $.ajax({
             type: "GET",
             url: "/student/date"+urlT,

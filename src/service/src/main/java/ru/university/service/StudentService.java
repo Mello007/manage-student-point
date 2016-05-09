@@ -30,8 +30,10 @@ public class StudentService {
         return null;
     }
 
-    public boolean delete(Student student) {
-        return false;
+    public int delete(String fullname) {
+        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Student WHERE fullName = :fullname");
+        query1.setParameter("fullname", fullname);
+        return query1.executeUpdate();
     }
 
     @Transactional

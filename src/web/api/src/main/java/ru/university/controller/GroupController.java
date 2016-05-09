@@ -11,7 +11,7 @@ import ru.university.service.GroupService;
 
 import java.util.List;
 
-@RestController
+@RestController //Указываем, что это будет контроллером
 @RequestMapping(value = "group")
 public class GroupController {
 

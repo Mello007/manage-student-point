@@ -20,8 +20,8 @@ function sendStudentAdding() {
 
 
 function sendStudentDelete() {
-    var name = $('#full_name').val();
-    var requestJSONparametr = "{\"fullName\": \"" + name + "\"}";
+    var name = $('#fullnamest').val();
+    var requestJSONparametr = "{\"fullname\": \"" + name + "\"}";
     $.ajax({
         type: "POST",
         url: "/student/delete",

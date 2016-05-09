@@ -14,12 +14,19 @@ public class EstimateService {
     @Autowired
     SessionFactory sessionFactory;
 
+
+    /**
+     * Метод, который добавляет оценку студенту
+     * @param estimate
+     * @param userId
+     */
     @Transactional
     public void add(Estimate estimate, long userId) {
-        Student student = sessionFactory.getCurrentSession().get(Student.class, userId);
+        Student student = sessionFactory.getCurrentSession().get(Student.class, userId); //Достаем студента из БД по userId
         List<Estimate> estimates = student.getEstimate();
         estimateAdding(estimates, estimate, student);
     }
+
 
     @Transactional
     public void addExtension(Estimate estimate, long userId) {

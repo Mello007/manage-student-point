@@ -18,22 +18,11 @@ public class StudentService {
 
     @Autowired SessionFactory sessionFactory;
 
-    public StudentService() {
-
-    }
-
-    public boolean add(Student student) {
-        return false;
-    }
-
-    public Student find(Student student) {
-        return null;
-    }
-
+    @Transactional
     public int delete(String fullname) {
-        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Student WHERE fullName = :fullname");
+        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Student WHERE fullName = :fullname"); // Достаем студента из БД с помощью HQL языка
         query1.setParameter("fullname", fullname);
-        return query1.executeUpdate();
+        return query1.executeUpdate(); //
     }
 
     @Transactional
@@ -56,10 +45,5 @@ public class StudentService {
     public Student createStudent(Student student) {
         sessionFactory.getCurrentSession().save(student);
         return student;
-    }
-
-    @Transactional
-    public List<Student> getWitInformationByDate(Date date) {
-        return null;
     }
 }

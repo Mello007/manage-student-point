@@ -11,11 +11,10 @@ import ru.university.controller.dto.EstimateDTO;
 import ru.university.entity.Estimate;
 import ru.university.service.EstimateService;
 
-@RestController()
+@RestController() //Указываем, что это будет контроллером
 @RequestMapping("estimatecontroller")
 public class EstimateController {
-    @Autowired
-    EstimateService estimateService;
+    @Autowired EstimateService estimateService; //Внедряем бин
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "add", method = RequestMethod.POST)

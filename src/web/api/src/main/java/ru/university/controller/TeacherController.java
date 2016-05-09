@@ -2,6 +2,7 @@ package ru.university.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.university.controller.dto.SimpleTeacherDTO;
 import ru.university.entity.Teacher;
@@ -9,8 +10,8 @@ import ru.university.service.TeacherService;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Secured("ROLE_TEACHER")
-@RestController
+@Secured("ROLE_TEACHER")
+@RestController //Указываем, что это будет контроллером
 @RequestMapping(value = "teacher", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class TeacherController {
     @Autowired TeacherService teacherService;

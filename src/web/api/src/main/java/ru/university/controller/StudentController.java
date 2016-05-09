@@ -9,17 +9,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.university.controller.dto.DateStudent;
 import ru.university.controller.dto.SimpleStudent;
+import ru.university.controller.dto.StudentDTO;
 import ru.university.entity.*;
 import ru.university.service.StudentService;
 
 import java.util.List;
 import ru.university.util.TimeIgnoringComparator;
 
-@RestController
-@RequestMapping("student")
+@RestController //Указываем, что это будет контроллером
+@RequestMapping("student") //
 public class StudentController {
     @Autowired StudentService studentService;
-
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "all", method = RequestMethod.GET)
@@ -41,25 +41,30 @@ public class StudentController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public int deleteStudent(String fullname){
-        return studentService.delete(fullname);
+    public int deleteStudent(@RequestBody StudentDTO studentDTO){
+        return studentService.delete(studentDTO.getFullname());
     }
 
+    /**
+     * Загружаем оценки студентов по выбранной дате
+     * @param date 
+     * @return
+     */
     @RequestMapping(value = "date", method = RequestMethod.GET)
-    public List<DateStudent> getStudentsByDate(@RequestParam(required = false, value = "date") Date date){
-        if (date == null) {
-            date = new Date();
+    public List<DateStudent> getStudentsByDate(@RequestParam(required = false, value = "date") Date date){ 
+        if (date == null) { //если дата null
+            date = new Date(); //создаем новую дату
         }
-        TimeIgnoringComparator timeIgnoringComparator = new TimeIgnoringComparator();
+        TimeIgnoringComparator timeIgnoringComparator = new TimeIgnoringComparator(); 
         List<Student> students = studentService.getAll();
-        List<DateStudent> dateStudents = new ArrayList<DateStudent>();
-        for (Student student : students) {
-            DateStudent dateStudent = new DateStudent();
-            dateStudent.setFullName(student.getFullName());
-            Attendance attendanceProperty = null;
-            for (Attendance attendance : student.getDateList()) {
-                if (timeIgnoringComparator.compare(attendance.getDate(), date)) {
-                    attendanceProperty = attendance;
+        List<DateStudent> dateStudents = new ArrayList<DateStudent>(); //Создаем новый dateStudents
+        for (Student student : students) { //Итерируемся по студентам
+            DateStudent dateStudent = new DateStudent(); //Создаем новый объект класса
+            dateStudent.setFullName(student.getFullName()); //Берем значение имени из studentSTOP и присваиваем в dateStudent
+            Attendance attendanceProperty = null; //Создаем новый экземпляр класс Attendance
+            for (Attendance attendance : student.getDateList()) { //Итерируемся
+                if (timeIgnoringComparator.compare(attendance.getDate(), date)) { //Сравнием дату с сайта и с БД
+                    attendanceProperty = attendance; //установили ссылку attendanceProperty на  attendance
                 }
             }
             Estimate estimation = null;
@@ -74,7 +79,7 @@ public class StudentController {
                     extEstimation = estimate;
                 }
             }
-            dateStudent.setDateList(attendanceProperty);
+            dateStudent.setDateList(attendanceProperty); //Добавляем оценку в dateStudent
             dateStudent.setStudentId(student.getStudentId());
             dateStudent.setEstimate(estimation);
             dateStudent.setExtEstimate(extEstimation);

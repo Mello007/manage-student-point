@@ -73,13 +73,13 @@
                     var fullNameElement = document.createElement('td');
                     fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
                     var estimateElement = document.createElement('td');
-                    var estimateValue = item.estimate === null? '' : item.estimate.estimate;
-                    var exEstimateValue = item.extEstimate === null? '' : item.extEstimate.estimate;
+                    var estimateValue = item.estimate === null? 0 : item.estimate.estimate;
+                    var exEstimateValue = item.extEstimate === null? 0 : item.extEstimate.estimate;
                     estimateValue = isNaN(parseInt(estimateValue)+parseInt(exEstimateValue)) ? '' : parseInt(estimateValue)+parseInt(exEstimateValue);
                     estimateElement.innerHTML = '<p>' + estimateValue + '</p>';
                     var respectElement = document.createElement('td');
-                    var respectValue = item.dateList === null? "" : item.dateList.respectCause;
-                    var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
+                    var respectValue = item.dateList === null? 0 : item.dateList.respectCause;
+                    var notRespectCause = item.dateList === null? 0 : item.dateList.notRespectCause;
                     respectValue = isNaN(parseInt(respectValue)+parseInt(notRespectCause)) ? '' : parseInt(respectValue)+parseInt(notRespectCause);
                     respectElement.innerHTML = '<p>' + respectValue + '</p>';
 

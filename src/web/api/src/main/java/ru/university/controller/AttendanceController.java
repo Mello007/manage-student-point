@@ -29,7 +29,7 @@ public class AttendanceController {
         if (attendanceDTO.getDate().equals("null")) { //Смотрим не получили ли мы строку null
             attendance.setDate(new Date()); //Если мы получили null, тогда создаем новую дату
         } else {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); //Если не получили null, тогда указываем в каком формате пришла дата
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); //Если не получили null, тогда указываем в каком формате пришла дата
             Date date = dateFormat.parse(attendanceDTO.getDate()); //Парсим дату
             attendance.setDate(date); //Добавляем конкретную дату к посещаемости
         }
@@ -44,7 +44,7 @@ public class AttendanceController {
         if (attendanceDTO.getDate().equals("null")) {
             attendance.setDate(new Date());
         } else {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Date date = dateFormat.parse(attendanceDTO.getDate());
             attendance.setDate(date);
         }

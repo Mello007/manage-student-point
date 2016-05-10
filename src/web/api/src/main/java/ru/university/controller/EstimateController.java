@@ -35,7 +35,7 @@ public class EstimateController {
         if (estimate.getDate().equals("null")) {
             estimat.setDate(new Date());
         } else {
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             Date date = dateFormat.parse(estimate.getDate());
             estimat.setDate(date);
         }

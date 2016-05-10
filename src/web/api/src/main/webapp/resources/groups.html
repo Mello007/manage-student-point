@@ -59,6 +59,41 @@
     $('#find').click(function () {
         var dateFrom = $('#date_timepicker_start').val();
         var dateTo = $('#date_timepicker_end').val();
+        dateFrom = dateFrom.length == 0 ? '' : "?dateFrom="+dateFrom;
+        dateTo = dateTo.length == 0 ? '' : "&dateTo="+dateTo;
+        $.ajax({
+            type: "GET",
+            url: "/student/dates"+dateFrom+dateTo,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (parsedStudents) {
+                var studentsTable = document.getElementById('all-student-table');
+                studentsTable.innerHTML="<tr><th>Имя и Фамилия студента</th><th>Количество баллов</th><th>Количество пропусков студента</th></tr>";
+                parsedStudents.forEach(function(item)  {
+                    var fullNameElement = document.createElement('td');
+                    fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
+                    var estimateElement = document.createElement('td');
+                    var estimateValue = item.estimate === null? '' : item.estimate.estimate;
+                    var exEstimateValue = item.extEstimate === null? '' : item.extEstimate.estimate;
+                    estimateValue = isNaN(parseInt(estimateValue)+parseInt(exEstimateValue)) ? '' : parseInt(estimateValue)+parseInt(exEstimateValue);
+                    estimateElement.innerHTML = '<p>' + estimateValue + '</p>';
+                    var respectElement = document.createElement('td');
+                    var respectValue = item.dateList === null? "" : item.dateList.respectCause;
+                    var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
+                    respectValue = isNaN(parseInt(respectValue)+parseInt(notRespectCause)) ? '' : parseInt(respectValue)+parseInt(notRespectCause);
+                    respectElement.innerHTML = '<p>' + respectValue + '</p>';
+
+                    var elementContainer = document.createElement('tr');
+                    elementContainer.appendChild(fullNameElement);
+                    elementContainer.appendChild(estimateElement);
+                    elementContainer.appendChild(respectElement);
+                    studentsTable.appendChild(elementContainer);
+                });
+            },
+            error: function (data) {
+                alert("Не удалось загрузить студентов!");
+            }
+        });
     });
 </script>
 </body>

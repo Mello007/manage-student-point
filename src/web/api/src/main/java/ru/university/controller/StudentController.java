@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.university.controller.dto.DateStudent;
 import ru.university.controller.dto.SimpleStudent;
@@ -15,6 +14,8 @@ import ru.university.service.StudentService;
 
 import java.util.List;
 import ru.university.util.TimeIgnoringComparator;
+
+import static ru.university.util.TimeIgnoringComparator.compare;
 
 @RestController //Указываем, что это будет контроллером
 @RequestMapping("student") //
@@ -55,7 +56,6 @@ public class StudentController {
         if (date == null) { //если дата null
             date = new Date(); //создаем новую дату
         }
-        TimeIgnoringComparator timeIgnoringComparator = new TimeIgnoringComparator(); 
         List<Student> students = studentService.getAll();
         List<DateStudent> dateStudents = new ArrayList<DateStudent>(); //Создаем новый dateStudents
         for (Student student : students) { //Итерируемся по студентам
@@ -63,19 +63,19 @@ public class StudentController {
             dateStudent.setFullName(student.getFullName()); //Берем значение имени из studentSTOP и присваиваем в dateStudent
             Attendance attendanceProperty = null; //Создаем новый экземпляр класс Attendance
             for (Attendance attendance : student.getDateList()) { //Итерируемся
-                if (timeIgnoringComparator.compare(attendance.getDate(), date)) { //Сравнием дату с сайта и с БД
+                if (compare(attendance.getDate(), date)) { //Сравнием дату с сайта и с БД
                     attendanceProperty = attendance; //установили ссылку attendanceProperty на  attendance
                 }
             }
             Estimate estimation = null;
             for (Estimate estimate : student.getEstimate()) {
-                if (timeIgnoringComparator.compare(estimate.getDate(), date)) {
+                if (compare(estimate.getDate(), date)) {
                     estimation = estimate;
                 }
             }
             Estimate extEstimation = null;
             for (Estimate estimate : student.getExtensionEstimate()) {
-                if (timeIgnoringComparator.compare(estimate.getDate(), date)) {
+                if (compare(estimate.getDate(), date)) {
                     extEstimation = estimate;
                 }
             }
@@ -86,5 +86,55 @@ public class StudentController {
             dateStudents.add(dateStudent);
         }
         return dateStudents;
+    }
+
+    /**
+     * Загружаем оценки студентов по выбранным датам
+     * @param dateFrom
+     * @param dateTo
+     * @return
+     */
+    @RequestMapping(value = "dates", method = RequestMethod.GET)
+    public List<DateStudent> getStudentsByPairDate(@RequestParam(required = false, value = "dateFrom") Date dateFrom,
+                                                   @RequestParam(required = false, value = "dateTo") Date dateTo){
+        List<DateStudent> dateStudentList = null;
+        if (dateFrom == null && dateTo != null) {
+            dateStudentList = getStudentsByDate(dateTo);
+        } else if (dateFrom != null && dateTo == null) {
+            dateStudentList = getStudentsByDate(dateFrom);
+        } else if (dateFrom == null && dateTo == null) {
+            dateStudentList = getStudentsByDate(null);
+        } else {
+            dateStudentList = new ArrayList<>();
+            List<Student> students = studentService.getAll();
+            for (Student student : students) { //Итерируемся по студентам
+                DateStudent dateStudent = new DateStudent(); //Создаем новый объект класса
+                dateStudent.setFullName(student.getFullName()); //Берем значение имени из studentSTOP и присваиваем в dateStudent
+                Attendance attendanceProperty = null; //Создаем новый экземпляр класс Attendance
+                for (Attendance attendance : student.getDateList()) { //Итерируемся
+                    if (dateFrom.compareTo(attendance.getDate()) * attendance.getDate().compareTo(dateTo) > 0) { //Сравнием дату с сайта и с БД
+                        attendanceProperty = attendance; //установили ссылку attendanceProperty на  attendance
+                    }
+                }
+                Estimate estimation = new Estimate();
+                for (Estimate estimate : student.getEstimate()) {
+                    if (dateFrom.compareTo(estimate.getDate()) * estimate.getDate().compareTo(dateTo) > 0) {
+                        estimation.setEstimate(estimate.getEstimate() + estimation.getEstimate());
+                    }
+                }
+                Estimate extEstimation = new Estimate();
+                for (Estimate estimate : student.getExtensionEstimate()) {
+                    if (dateFrom.compareTo(estimate.getDate()) * estimate.getDate().compareTo(dateTo) > 0) {
+                        extEstimation.setEstimate(estimate.getEstimate() + estimation.getEstimate());
+                    }
+                }
+                dateStudent.setDateList(attendanceProperty); //Добавляем оценку в dateStudent
+                dateStudent.setStudentId(student.getStudentId());
+                dateStudent.setEstimate(estimation);
+                dateStudent.setExtEstimate(extEstimation);
+                dateStudentList.add(dateStudent);
+            }
+        }
+        return dateStudentList;
     }
 }

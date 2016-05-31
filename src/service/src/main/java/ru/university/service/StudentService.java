@@ -13,37 +13,50 @@ import ru.university.entity.Student;
 
 import java.util.List;
 
+/**
+ * Указываем что это Service
+ */
 @Service
 public class StudentService {
 
     @Autowired SessionFactory sessionFactory;
 
+    /**
+     * Метод, который удаляет студента
+     * @param fullname Принимает имя
+     * @return
+     */
     @Transactional
     public int delete(String fullname) {
-        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Student WHERE fullName = :fullname"); // Достаем студента из БД с помощью HQL языка
-        query1.setParameter("fullname", fullname);
-        return query1.executeUpdate(); //
+        Query query1 = sessionFactory.getCurrentSession().createQuery("delete from Student WHERE fullName = :fullname"); // Удаляем студента из БД с помощью HQL языка
+        query1.setParameter("fullname", fullname); //Указываем, что в запросе fullname это будет принимаемый fullname
+        return query1.executeUpdate(); //Обновляем значения
     }
 
+    /**
+     * Метод который показывает всех студентов
+     * @return
+     */
     @Transactional
     public List<Student> getAll() {
-        Query query = sessionFactory.openSession().createQuery("from Student");
-        List<Student> students = query.list();
-        for (Student students1 : students) {
-            students1.getEstimate();
-            students1.getExtensionEstimate();
-            students1.getDateList();
+        Query query = sessionFactory.openSession().createQuery("from Student"); //Делаем запрос через HQL
+        List<Student> students = query.list(); //ПОлучаем всех студентов
+        for (Student students1 : students) { //цикл
+            students1.getEstimate(); //получаем оценку
+            students1.getExtensionEstimate(); //получаем оценку за доп задания
+            students1.getDateList(); //Получаем DateList
         }
-        return students;
+        return students; //Возвращаем студентов
     }
 
-    public boolean addEstimate(Student student) {
-        return false;
-    }
-
+    /**
+     * Метод, который создает нового студента и сохраняет его в БД
+     * @param student принимает студента
+     * @return
+     */
     @Transactional
     public Student createStudent(Student student) {
-        sessionFactory.getCurrentSession().save(student);
+        sessionFactory.getCurrentSession().save(student); //Сохраняем полученного студента в БД
         return student;
     }
 }

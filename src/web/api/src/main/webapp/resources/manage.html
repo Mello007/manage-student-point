@@ -5,19 +5,19 @@
     <link href="main.css" rel="stylesheet">
     <link href="tcal.css" rel="stylesheet">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/resources/tcal.js"></script>
+    <script type="text/javascript" src="/resources/tcal.js"></script> <!-- Подключаем библиотеку календаря -->
     <script type="text/javascript" src="/resources/script.js"></script>
-    <title>Пример веб-страницы</title>
+    <title>Система управления баллами по АИП для студентов УИР</title>
 </head>
 <body>
 <center><h1 class="ribbon"><strong class="ribbon-content">Система управления баллами по АИП для студентов УИР</strong></h1></center>
 
-<form action="#">
+<form action="#"> <!--Форма календаря -->
     <div id="name_calendar"><h2>Выбор даты</h2></div>
     <div id="calendar"><input type="text" name="date" class="tcal" value="" /></div>
 </form>
 
-<label class="btn" for="modal-1" id="choice_date">Выбрать промежуток дат</label>
+<label class="btn"  id="choice_date" onclick="location.href='date.html'" >Выбрать промежуток дат</label>
 
 <label class="btn" for="modal-1" id="manage_teacher">Управление преподавателями</label>
 <!-- Модальное окно, которое выскакивает по нажатию кнопки-->
@@ -53,10 +53,10 @@
                 <h2>Удалить преподавателя</h2>
             </div>
             <div class="modal-body">
-               <center> <form action="/teacher/delete" onsubmit=""  method="POST">
-                    <input name="fullname" placeholder="Введите ФИО для удаления" type="text">
+               <center> <form onsubmit="sendTeacherDelete()" action="javascript:void(null);">
+                    <input id="teacherFullName" placeholder="Введите ФИО для удаления" type="text">
                     <br>
-                    <input type="submit"value="Удалить"/></br>
+                    <input type="submit" value="Удалить"/></br>
                 </form></center>
             </div>
             <div class="modal-footer">
@@ -66,18 +66,18 @@
     </div>
 </div>
 
-<label class="btn" for="modal-2">Управление студентами</label>
+<label class="btn" for="modal-2">Управление студентами</label> <!--Кнопка -->
 
 <div class="modal">
-    <input class="modal-open" id="modal-2" type="checkbox" hidden>
-    <div class="modal-wrap" aria-hidden="true" role="dialog">
+    <input class="modal-open" id="modal-2" type="checkbox" hidden> <!--Модальное окно -->
+    <div class="modal-wrap" aria-hidden="true" role="dialog"> <!-- Модальное окно -->
         <label class="modal-overlay" for="modal-2"></label>
         <div class="modal-dialog">
             <div class="modal-header">
                 <h2>Добавить студента</h2>
             </div>
             <div class="modal-body">
-                <form onsubmit="sendStudentAdding()" action="javascript:void(null);">
+                <form onsubmit="sendStudentAdding()" action="javascript:void(null);"> <!-- Запускаем этот метод по нажатию на кнопку-->
                     <center>
                     <br>
                     <input id="fullname_student" placeholder="Введите ФИО студента" size="50px" type="text">
@@ -95,7 +95,7 @@
                 <h2>Удалить студента</h2>
             </div>
             <div class="modal-body">
-                <form onsubmit="sendStudentDelete()" action="javascript:void(null);">
+                <form onsubmit="sendStudentDelete()" action="javascript:void(null);"> <!--Запускаем этот метод по нажатию на кнопку -->
                     <center>
                         <br>
                         <input id="fullnamest" placeholder="Введите ФИО студента" size="50px" type="text">
@@ -112,7 +112,7 @@
     </div>
 </div>
 
-<table id="all-student-table" class="features-table">
+<table id="all-student-table" class="features-table"> <!--Таблица со студентами -->
     <tr>
         <th>Имя и Фамилия студента</th>
         <th>Количество баллов</th>

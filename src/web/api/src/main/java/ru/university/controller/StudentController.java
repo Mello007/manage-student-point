@@ -6,19 +6,18 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.university.controller.dto.DateStudent;
-import ru.university.controller.dto.SimpleStudent;
-import ru.university.controller.dto.StudentDTO;
+import ru.university.dto.DateStudent;
+import ru.university.dto.SimpleStudent;
+import ru.university.dto.StudentDTO;
 import ru.university.entity.*;
 import ru.university.service.StudentService;
 
 import java.util.List;
-import ru.university.util.TimeIgnoringComparator;
 
 import static ru.university.util.TimeIgnoringComparator.compare;
 
 @RestController //Указываем, что это будет контроллером
-@RequestMapping("student") //
+@RequestMapping("student") //Указываем URL для данного класса
 public class StudentController {
     @Autowired StudentService studentService;
 
@@ -80,7 +79,7 @@ public class StudentController {
                 }
             }
             dateStudent.setDateList(attendanceProperty); //Добавляем оценку в dateStudent
-            dateStudent.setStudentId(student.getStudentId());
+            dateStudent.setStudentId(student.getId());
             dateStudent.setEstimate(estimation);
             dateStudent.setExtEstimate(extEstimation);
             dateStudents.add(dateStudent);
@@ -129,7 +128,7 @@ public class StudentController {
                     }
                 }
                 dateStudent.setDateList(attendanceProperty); //Добавляем оценку в dateStudent
-                dateStudent.setStudentId(student.getStudentId());
+                dateStudent.setStudentId(student.getId());
                 dateStudent.setEstimate(estimation);
                 dateStudent.setExtEstimate(extEstimation);
                 dateStudentList.add(dateStudent);

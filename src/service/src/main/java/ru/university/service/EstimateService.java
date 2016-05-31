@@ -16,18 +16,23 @@ public class EstimateService {
 
 
     /**
-     * Метод, который добавляет оценку студенту
-     * @param estimate
-     * @param userId
+     * Метод, который добавляет оценку за основные задания студенту
+     * @param estimate //принимает оценку
+     * @param userId //принимает Id студента
      */
     @Transactional
     public void add(Estimate estimate, long userId) {
         Student student = sessionFactory.getCurrentSession().get(Student.class, userId); //Достаем студента из БД по userId
-        List<Estimate> estimates = student.getEstimate();
-        estimateAdding(estimates, estimate, student);
+        List<Estimate> estimates = student.getEstimate(); //Получаем список оценок студента
+        estimateAdding(estimates, estimate, student); //передаем данные в estimateAdding
     }
 
 
+    /**
+     * Метод, который добавляет оценку за доп задания студенту
+     * @param estimate //принимает оценку
+     * @param userId //принимает Id студента
+     */
     @Transactional
     public void addExtension(Estimate estimate, long userId) {
         Student student = sessionFactory.getCurrentSession().get(Student.class, userId);
@@ -35,18 +40,25 @@ public class EstimateService {
         estimateAdding(estimates, estimate, student);
     }
 
+
+    /**
+     * Метож, который записывает оценку студента в БД
+     * @param estimates //принимает все оценки студента
+     * @param estimate //принимает оценку студента
+     * @param student //принимает студента
+     */
     private void estimateAdding(List<Estimate> estimates, Estimate estimate, Student student){
-        TimeIgnoringComparator comparator = new TimeIgnoringComparator();
-        boolean finded = false;
-        for (Estimate estimate1 : estimates) {
-            if (comparator.compare(estimate1.getDate(), estimate.getDate())) {
-                estimate1.setEstimate(estimate.getEstimate());
+        TimeIgnoringComparator comparator = new TimeIgnoringComparator(); //создаем объект класса TimeIgnoringComparator для сравнения даты в БД и выбранной даты
+        boolean finded = false; //заводим флаг
+        for (Estimate estimate1 : estimates) { //цикл
+            if (comparator.compare(estimate1.getDate(), estimate.getDate())) { //сравниваем нашлась ли выбранная дата в БД
+                estimate1.setEstimate(estimate.getEstimate()); //обновляем оценку в БД
                 finded = true;
             }
         }
         if (!finded) {
-            estimates.add(estimate);
+            estimates.add(estimate); // добавляем оценку в БД
         }
-        sessionFactory.getCurrentSession().merge(student);
+        sessionFactory.getCurrentSession().merge(student); //обновляем студента
     }
 }

@@ -1,6 +1,8 @@
 package ru.university.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,15 +11,9 @@ import java.util.List;
 
 
 
-@Data
-@Entity
-@Table(name = "group_table")
-public class Group {
-    @Id @GeneratedValue(strategy = GenerationType.TABLE) @Column(name = "group_id")  private Long groupId;
-    @Column private String name;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="group_student",
-            joinColumns={@JoinColumn(name="group_id")},
-            inverseJoinColumns={@JoinColumn(name="student_id")})
-    private List<Student> students;
+@Getter @Setter
+@Entity @Table(name = "Groups")
+public class Group extends BaseEntity {
+    private String name;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable private List<Student> students;
 }

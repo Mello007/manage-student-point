@@ -5,16 +5,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.university.controller.dto.AttendanceDTO;
+import ru.university.dto.AttendanceDTO;
 import ru.university.entity.Attendance;
-import ru.university.entity.Student;
 import ru.university.service.AttendanceService;
-import ru.university.service.StudentService;
-
 
 
 @RestController //Указываем, что это будет контроллером

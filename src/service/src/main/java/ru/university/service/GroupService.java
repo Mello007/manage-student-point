@@ -19,9 +19,7 @@ import java.util.List;
 @Service
 public class GroupService {
 
-
     @Autowired SessionFactory sessionFactory;
-
     @Autowired Session session;
 
     @Transactional

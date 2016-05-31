@@ -1,4 +1,4 @@
-package ru.university.controller.dto;
+package ru.university.dto;
 
 import lombok.Data;
 

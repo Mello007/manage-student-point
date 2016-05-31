@@ -1,19 +1,19 @@
 
-function sendStudentAdding() {
-    var name = $('#fullname_student').val();
-    var estimate = $('#estimate_student').val();
-    var requestJSONparametr = "{\"fullName\": \"" + name + "\", \"estimate\": \"" + estimate + "\"}";
-    $.ajax({
-        type: "POST",
-        url: "/student/add",
-        contentType: "application/json",
-        dataType: 'json',
+function sendStudentAdding() { //функция которая добавляет студента
+    var name = $('#fullname_student').val(); //получаем имя студента по id на странице
+    var estimate = $('#estimate_student').val(); //получаем балл студента по id на странице
+    var requestJSONparametr = "{\"fullName\": \"" + name + "\", \"estimate\": \"" + estimate + "\"}"; //создаем JSON
+    $.ajax({ //запускаем запрос ajax
+        type: "POST", //тип запроса POST
+        url: "/student/add", //url куда будет отправлен запрос
+        contentType: "application/json", //тип контента в запросе
+        dataType: 'json', //тип контента
         data: requestJSONparametr,
-        success: function (data) {
-            alert("Студент успешно добавлен!");
+        success: function (data) { //отправляем данные
+            alert("Студент успешно добавлен!"); //сообщение при успешной отправке
         },
         error: function (data) {
-            alert("Не удалось добавить студента! Вы ввели неправильные значения! Попробуйте еще раз");
+            alert("Не удалось добавить студента! Вы ввели неправильные значения! Попробуйте еще раз"); //сообщение при неудачной отправке
         }
     });
 }
@@ -33,6 +33,42 @@ function sendStudentDelete() {
         },
         error: function (data) {
             alert("Не удалось удалить студента! Возможно, вы ввели неправильно имя либо ввели недопустимое значение имени");
+        }
+    });
+}
+
+function sendStudentDelete() {
+    var name = $('#fullnamest').val();
+    var requestJSONparametr = "{\"fullname\": \"" + name + "\"}";
+    $.ajax({
+        type: "POST",
+        url: "/student/delete",
+        contentType: "application/json",
+        dataType: 'json',
+        data: requestJSONparametr,
+        success: function (data) {
+            alert("Студент успешно удален!");
+        },
+        error: function (data) {
+            alert("Не удалось удалить студента! Возможно, вы ввели неправильно имя либо ввели недопустимое значение имени");
+        }
+    });
+}
+
+function sendTeacherDelete() {
+    var name = $('#teacherFullName').val();
+    var requestJSONparametr = "{\"fullname\": \"" + name + "\"}";
+    $.ajax({
+        type: "POST",
+        url: "/teacher/delete",
+        contentType: "application/json",
+        dataType: 'json',
+        data: requestJSONparametr,
+        success: function (data) {
+            alert("Преподаватель успешно удален!");
+        },
+        error: function (data) {
+            alert("Не удалось удалить преподавателя! Возможно, вы ввели неправильно имя либо ввели недопустимое значение имени");
         }
     });
 }
@@ -73,23 +109,24 @@ $(window).load(function () {
             contentType: "application/json",
             dataType: 'json',
             success: function (parsedStudents) {
-                var studentsTable = document.getElementById('all-student-table');
+                var studentsTable = document.getElementById('all-student-table'); //ищем all-student-table
+                //создаем таблицу
                 studentsTable.innerHTML="<tr><th>Имя и Фамилия студента</th><th>Основные баллы</th>" +
                     "<th>Дополнительные баллы</th>" +
                     "<th>Количество пропусков по уважительной причине</th>" +
                     "<th>Количество пропусков по неуважительной причине</th></tr>"
                 parsedStudents.forEach(function(item)  {
-                    var reqDate = curent_date === undefined ? new Date : curent_date;
+                    var reqDate = curent_date === undefined ? new Date : curent_date; //если дата не выбрана создаем новую дату
                     var fullNameElement = document.createElement('td');
                     fullNameElement.innerHTML = '<p>' + item['fullName'] + '</p>';
 
                     var estimateElement = document.createElement('td');
                     var estimateValue = item.estimate === null? "" : item.estimate.estimate;
                     var inputEstimateElement = document.createElement('input');
-                    inputEstimateElement.setAttribute('type', 'text');
+                    inputEstimateElement.setAttribute('type', 'text'); //указываем тип
                     inputEstimateElement.setAttribute('value', estimateValue);
                     inputEstimateElement.onblur = function() {
-                        sendEstimateAdding(item.studentId, this.value, reqDate);
+                        sendEstimateAdding(item.studentId, this.value, reqDate);//функция которая вызывается если мы кликаем за пределы полей балла
                     };
                     estimateElement.appendChild(inputEstimateElement);
 
@@ -100,7 +137,7 @@ $(window).load(function () {
                     exInputEstimateElement.setAttribute('type', 'text');
                     exInputEstimateElement.setAttribute('value', exEstimateValue);
                     exInputEstimateElement.onblur = function() {
-                        sendExEstimateAdding(item.studentId, this.value, reqDate);
+                        sendExEstimateAdding(item.studentId, this.value, reqDate); //добавляем балл за доп задания
                     };
                     extEstimateElement.appendChild(exInputEstimateElement);
                     
@@ -112,7 +149,7 @@ $(window).load(function () {
                     inputRespectElement.setAttribute('value', respectValue);
                     respectElement.appendChild(inputRespectElement);
                     inputRespectElement.onblur = function() {
-                        sendRespectAdding(item.studentId, this.value, reqDate);
+                        sendRespectAdding(item.studentId, this.value, reqDate); //добавляем уважительные пропуски
                     };
                     var notrespectElement = document.createElement('td');
                     var notRespectCause = item.dateList === null? "" : item.dateList.notRespectCause;
@@ -121,8 +158,9 @@ $(window).load(function () {
                     inputNotRespectElement.setAttribute('value', notRespectCause);
                     notrespectElement.appendChild(inputNotRespectElement);
                     inputNotRespectElement.onblur = function() {
-                        sendNotRespectAdding(item.studentId, this.value, reqDate);
+                        sendNotRespectAdding(item.studentId, this.value, reqDate); //добавляем неуважительные пропуски
                     };
+                    //добавляем все собранные данные в таблицу
                     elementContainer.appendChild(fullNameElement);
                     elementContainer.appendChild(estimateElement);
                     elementContainer.appendChild(extEstimateElement);
@@ -132,12 +170,12 @@ $(window).load(function () {
                 });
             },
             error: function (data) {
-                alert("Не удалось загрузить студентов!");
+                alert("Не удалось загрузить студентов!"); // выводи при ошибке
             }
         });
     }
 
-    function sendEstimateAdding(id, estimate, date) {
+    function sendEstimateAdding(id, estimate, date) { //функция которая отправляет запрос на добавления балл за осн задачи студенту
         var requestJSONparametr = "{\"id\": \"" + id + "\", \"estimate\": \"" + estimate + "\", \"date\": \"" + date + "\"}";
         $.ajax({
             type: "POST",
@@ -148,7 +186,7 @@ $(window).load(function () {
         });
     }
 
-function sendExEstimateAdding(id, estimate, date) {
+function sendExEstimateAdding(id, estimate, date) {  //функция которая отправляет запрос на добавления балла за доп задачи студенту
     var requestJSONparametr = "{\"id\": \"" + id + "\", \"estimate\": \"" + estimate + "\", \"date\": \"" + date + "\"}";
     $.ajax({
         type: "POST",
@@ -158,7 +196,7 @@ function sendExEstimateAdding(id, estimate, date) {
         data: requestJSONparametr
     });
 }
-    function sendRespectAdding(id, respect, date) {
+    function sendRespectAdding(id, respect, date) {  //функция которая отправляет запрос на добавления пропуска по уваж причине студенту
         var requestJSONparametr = "{\"id\": \"" + id + "\", \"respect\": \"" + respect + "\", \"date\": \"" + date + "\"}";
         $.ajax({
             type: "POST",
@@ -169,7 +207,7 @@ function sendExEstimateAdding(id, estimate, date) {
         });
     }
 
-function sendNotRespectAdding(id, respect, date) {
+function sendNotRespectAdding(id, respect, date) {  //функция которая отправляет запрос на добавления пропуска по неуваж причине студенту
     var requestJSONparametr = "{\"id\": \"" + id + "\", \"notRespectCause\": \"" + respect + "\", \"date\": \"" + date + "\"}";
     $.ajax({
         type: "POST",
@@ -180,20 +218,20 @@ function sendNotRespectAdding(id, respect, date) {
     });
 }
 
-    var teacher = new XMLHttpRequest();
-    teacher.open("GET", "/teacher/all", true);
-    teacher.onload = function (){
-        var parsedTeacher = JSON.parse(this.responseText);
-        var teacherTable = document.getElementById('teachers');
-        parsedTeacher.forEach(function(t)  {
-            var Name = document.createElement('td');
-            Name.innerHTML = '<p>' + t['fullName'] + '</p>';
-            var elementContainer1 = document.createElement('tr');
-            elementContainer1.appendChild(Name);
-            teacherTable.appendChild(elementContainer1);
+    var teacher = new XMLHttpRequest(); //функция которая отображает всех преподавателей
+    teacher.open("GET", "/teacher/all", true); //отправляем GET запрос по адресу /teacher/all
+    teacher.onload = function (){ //запускаем функцию
+        var parsedTeacher = JSON.parse(this.responseText); //указываем что это будет JSON
+        var teacherTable = document.getElementById('teachers'); //ищем teachers таблицу
+        parsedTeacher.forEach(function(t)  { //функция
+            var Name = document.createElement('td'); //создаем тег для таблицы
+            Name.innerHTML = '<p>' + t['fullName'] + '</p>'; //вставляем имя преподавателя
+            var elementContainer1 = document.createElement('tr'); //тег для таблицы
+            elementContainer1.appendChild(Name); //добавляем имя в тег tr
+            teacherTable.appendChild(elementContainer1); //добавляем имя в таблицу
         });
     };
-    teacher.send(null);
+    teacher.send(null); //указываем что в ответ ничего не отправляем
 
 
     

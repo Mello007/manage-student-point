@@ -1,23 +1,18 @@
 package ru.university.entity;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
-@Entity
-@Table
-
+@Getter @Setter
+@Entity @Table
 //Класс учитель, в котором описаны поля: логин, пароль, полное имя.
-public class Teacher {
-    @Id @GeneratedValue(strategy = GenerationType.TABLE) @Column(name = "teacher_id")  private Long teacherId;
-    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name="teacher_group",
-            joinColumns={@JoinColumn(name="teacher_id")},
-            inverseJoinColumns={@JoinColumn(name="group_id")})
-    private List<Group> groups;
-    @Column private String login;
-    @Column private String password;
-    @Column private String fullName;
+public class Teacher extends BaseEntity {
+    private String login;
+    private String password;
+    private String fullName;
+    @ManyToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL) @JoinTable private List<Group> groups;
 }

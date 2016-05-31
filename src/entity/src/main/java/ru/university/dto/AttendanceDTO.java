@@ -1,6 +1,5 @@
-package ru.university.controller.dto;
+package ru.university.dto;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data

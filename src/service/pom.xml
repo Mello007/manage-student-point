@@ -96,5 +96,16 @@
             <artifactId>jackson-annotations</artifactId>
         </dependency>
 
+        <!-- http://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
     </dependencies>
 </project>

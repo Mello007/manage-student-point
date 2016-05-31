@@ -1,7 +1,5 @@
-package ru.university.controller.dto;
+package ru.university.dto;
 
-import java.util.List;
-import javax.persistence.*;
 import lombok.Data;
 import ru.university.entity.Attendance;
 import ru.university.entity.Estimate;

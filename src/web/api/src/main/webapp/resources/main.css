@@ -281,12 +281,14 @@ span.highlight {
 span.splink {
     color: #0A5794; cursor: pointer; }
 
+/* Расположение календаря */
 #calendar{
     position: absolute;
     margin-left: 1100px;
     margin-top: 10px;
 }
 
+/*Расположение надписи календаря */
 #name_calendar{
     font-family: anonymous-pro, sans-serif;
     position: absolute;
@@ -294,11 +296,13 @@ span.splink {
     margin-top: -40px;
 }
 
+/* Расположние кнопки Управление преподавателя*/
 #manage_teacher{
     position: absolute;
     margin-right: 450px;
 }
 
+/*Расположение кнопки выбора даты */
 #choice_date{
     position: absolute;
     margin-right: -200px;

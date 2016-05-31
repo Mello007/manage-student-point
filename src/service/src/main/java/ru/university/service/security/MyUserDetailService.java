@@ -41,7 +41,7 @@ public class MyUserDetailService implements UserDetailsService {
 
     private User buildUserForAuthentication(Teacher teacher,
                                             List<GrantedAuthority> authorities) {
-        return new CustomUser(teacher.getTeacherId(), teacher.getLogin(), teacher.getPassword(),
+        return new CustomUser(teacher.getId(), teacher.getLogin(), teacher.getPassword(),
                true, true, true, true, authorities);
     }
 

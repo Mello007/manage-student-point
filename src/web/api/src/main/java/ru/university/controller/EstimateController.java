@@ -7,7 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.university.controller.dto.EstimateDTO;
+import ru.university.dto.EstimateDTO;
 import ru.university.entity.Estimate;
 import ru.university.service.EstimateService;
 

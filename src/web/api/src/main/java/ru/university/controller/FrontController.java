@@ -10,3 +10,4 @@ public class FrontController {
         return "resources/index.html";
     }
 }
+

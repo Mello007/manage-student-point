@@ -20,7 +20,6 @@ import java.util.List;
 public class StudentService {
 
     @Autowired SessionFactory sessionFactory;
-
     /**
      * Метод, который удаляет студента
      * @param fullname Принимает имя

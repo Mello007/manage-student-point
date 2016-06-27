@@ -28,7 +28,6 @@ public class TeacherController {
     public Teacher add(@RequestBody Teacher teacher){
         return teacherService.createTeacher(teacher);
     }
-
     /**
      * Метод, который показывает всех преподавателей
      * @return

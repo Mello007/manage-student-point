@@ -19,6 +19,9 @@ function sendStudentAdding() { //функция которая добавляе�
 }
 
 
+
+
+
 function sendStudentDelete() {
     var name = $('#fullnamest').val();
     var requestJSONparametr = "{\"fullname\": \"" + name + "\"}";
@@ -234,4 +237,4 @@ function sendNotRespectAdding(id, respect, date) {  //функция котор�
     teacher.send(null); //указываем что в ответ ничего не отправляем
 
 
-    
+

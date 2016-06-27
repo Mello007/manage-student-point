@@ -21,7 +21,6 @@ public class GroupService {
 
     @Autowired SessionFactory sessionFactory;
     @Autowired Session session;
-
     @Transactional
     public Group findById(Long id) {
         Group group = sessionFactory.openSession().get(Group.class, id);
@@ -31,8 +30,6 @@ public class GroupService {
         return group;
     }
 
-
-
     @Transactional
     public List<Group> findByTeacher(){
         long teacherId = session.getLoggedUserId();
@@ -40,9 +37,7 @@ public class GroupService {
         List<Group> groupList = null;
         if (teacher != null){
             groupList = teacher.getGroups();
-            for (Group group : groupList){
-                group.getStudents();
-            }
+            groupList.forEach(group -> group.getStudents());
         }
         return groupList;
     }
@@ -52,9 +47,7 @@ public class GroupService {
         long teacherId = session.getLoggedUserId();
         Teacher teacher = sessionFactory.openSession().get(Teacher.class, teacherId);
         List<Group> groupList = teacher.getGroups();
-        for (Group group : groupList){
-            group.getStudents();
-        }
+        groupList.forEach(group -> group.getStudents());
         return  groupList;
     }
 }

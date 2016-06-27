@@ -13,7 +13,23 @@
 <a href="/resources/teacher.html" target="_blank" class="great_btn">
     <right> <button>Вход для преподавателя</button></right> <!--кнопка -->
 </a>
-
+<script type="text/javascript">
+    function getApi() {
+        $.get("oauth/vk", function (data) {
+            window.open(data);
+        })
+    }
+</script>
+<form onsubmit="getApi()" action="javascript:void(null);"> <!-- Запускаем этот метод по нажатию на кнопку-->
+    <center>
+        <br>
+        <input id="fullname_student" placeholder="Введите ФИО студента" size="50px" type="text">
+        <input id="estimate_student" placeholder="Введите его оценку" type="text">
+        <br/>
+        <br>
+        <input type="submit" value="Добавить студента"/></br>
+        <br/></center>
+</form>
 <table id="all-student-table" class="features-table">
     <thead>
     <tr>
